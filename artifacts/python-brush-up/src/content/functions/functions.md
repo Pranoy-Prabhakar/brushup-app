@@ -1,5 +1,5 @@
 ## What is it?
-A function is a named, reusable block of work. It can accept inputs and return a result to its caller.
+A function is a named block of code you can reuse. It can take inputs and send back a result.
 
 ## Syntax
 ```python
@@ -15,7 +15,7 @@ def area(width, height):
 ```
 
 ## When to use
-Use a function to name a task, remove meaningful duplication, or isolate a behavior with a clear input/output contract.
+Use a function to name a task, avoid repeating the same work, or keep one job in one place.
 
 ## Common mistake
 A function without an explicit `return` returns `None`. `print()` displays a value but does not return it.
@@ -24,4 +24,13 @@ A function without an explicit `return` returns `None`. `print()` displays a val
 Keep each function focused and make its name describe the result or action.
 
 ## Remember
-Call a function with `()`, and use `return` to hand a value back.
+Call a function with `()`; use `return` to send a value back.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `callable(value)` | Checks whether a value can be called. | `callable(len)  # True` |
+| `help(function)` | Shows built-in help for a function. | `help(sorted)` |
+| `return` | Sends a result back to the caller. | `return price * count` |
+| `*args` | Accepts any number of positional values. | `def total(*values): ...` |
+| `lambda args: value` | Makes a small unnamed function. | `double = lambda n: n * 2` |

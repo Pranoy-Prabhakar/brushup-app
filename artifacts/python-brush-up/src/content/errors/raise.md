@@ -1,5 +1,5 @@
 ## What is it?
-`raise` signals an error by creating or re-raising an exception. It lets invalid operations fail clearly.
+`raise` reports an error so the caller knows the operation could not continue.
 
 ## Syntax
 ```python
@@ -17,13 +17,22 @@ def withdraw(balance, amount):
 ```
 
 ## When to use
-Raise a specific exception when an input or state violates a documented requirement.
+Raise a clear, specific error when input breaks a rule.
 
 ## Common mistake
-Bare `raise` is for re-raising inside an exception handler; outside it there is no active exception.
+Use bare `raise` inside an `except` block to pass the same error on. Outside one, there is no error to re-raise.
 
 ## Tip
 Use built-in exception types when they fit, and write messages that explain how to fix the problem.
 
 ## Remember
-Raise at the point an invalid state becomes clear.
+Raise an error as soon as you know something is wrong.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `ValueError(message)` | Describes a value that is not allowed. | `raise ValueError("bad age")` |
+| `TypeError(message)` | Describes a value of the wrong type. | `raise TypeError("name must be text")` |
+| `raise` | Stops work by raising an exception. | `raise RuntimeError("offline")` |
+| `raise` (inside `except`) | Raises the caught exception again. | `except OSError: raise` |
+| `str(exception)` | Gets the exception message as text. | `str(error)` |

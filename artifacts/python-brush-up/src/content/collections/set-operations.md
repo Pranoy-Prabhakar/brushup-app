@@ -26,4 +26,14 @@ Operations discard duplicates and do not preserve meaningful sequence order.
 Use `issubset()` or `<=` to express containment directly.
 
 ## Remember
-Convert to sets when uniqueness and group comparison are the point.
+Use sets when unique values and group comparisons matter.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `a | b` | Combines both sets (union). | `readers | writers` |
+| `a & b` | Keeps shared values (intersection). | `readers & writers` |
+| `a - b` | Keeps values only in the left set. | `all_users - blocked` |
+| `a ^ b` | Keeps values in one set, but not both. | `a ^ b` |
+| `set.issubset(other)` | Checks whether all values are in another set. | `small.issubset(big)` |
+| `set.isdisjoint(other)` | Checks whether sets have no shared values. | `a.isdisjoint(b)` |

@@ -1,5 +1,5 @@
 ## What is it?
-JSON is a text format for exchanging common data structures. Python's `json` module converts between JSON text and Python values.
+JSON is a text format for sharing data. Python's `json` module turns JSON text into Python values and back.
 
 ## Syntax
 ```python
@@ -18,10 +18,10 @@ decoded = json.loads(encoded)
 ```
 
 ## When to use
-Use JSON for interoperable, human-readable data exchange and configuration.
+Use JSON to share data between programs or save simple settings in a readable format.
 
 ## When not to use
-JSON has no native representation for arbitrary Python objects, tuples, or sets without a conversion scheme.
+JSON cannot directly store every Python object, tuple, or set. Convert them to supported values first.
 
 ## Common mistake
 `loads()` parses a string; `load()` reads from a file object. `dumps()` returns text; `dump()` writes to a file.
@@ -30,4 +30,14 @@ JSON has no native representation for arbitrary Python objects, tuples, or sets 
 Use `ensure_ascii=False` when readable non-ASCII characters are desired in the output.
 
 ## Remember
-The “s” versions work with strings; the others work with file objects.
+The names ending in `s` use strings; the others use files.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `json.loads(text)` | Parses JSON text into Python values. | `json.loads('{"ok": true}')` |
+| `json.dumps(value)` | Turns Python values into JSON text. | `json.dumps({"ok": True})` |
+| `json.load(file)` | Reads JSON from a file. | `json.load(file)` |
+| `json.dump(value, file)` | Writes JSON to a file. | `json.dump(data, file)` |
+| `json.dumps(..., indent=2)` | Adds line breaks and spaces for readability. | `json.dumps(data, indent=2)` |
+| `json.dumps(..., ensure_ascii=False)` | Keeps readable non-ASCII text. | `json.dumps(data, ensure_ascii=False)` |

@@ -1,44 +1,42 @@
-# [Project name]
+# Brushup
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A compact, searchable reference site for quickly refreshing software concepts. Python is the first topic collection; keep the Brushup brand broad so more subjects can be added later.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/python-brush-up run dev` — run the Brushup web app
+- `pnpm --filter @workspace/python-brush-up run typecheck` — check the app's TypeScript
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- React, TypeScript, Vite, Tailwind CSS, React Router
+- Frontend-only: no app backend, database, or login
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/python-brush-up/src/App.tsx` — routes, shared layout, search, and page rendering
+- `artifacts/python-brush-up/src/content/` — topic catalog, refresher copy, and Markdown lessons
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Keep lesson copy outside React components so topic sets can grow independently from the UI.
+- Keep Python as the first subject collection, not part of the product name.
+- Use short plain-English explanations and compact API/method tables so lessons are easy to scan.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Home, topic index, topic detail, and a quick refresher
+- Client-side search across lessons and API names
+- Light and dark themes
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Use simpler wording and explain useful built-in functions, methods, and related APIs with examples.
+- Keep topic pages complete enough to refresh the important details quickly.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Lesson Markdown tables are rendered by the app's own Markdown renderer; keep the table format consistent with existing lessons.
 
 ## Pointers
 

@@ -1,5 +1,5 @@
 ## What is it?
-An iterable can produce an iterator; an iterator returns one item at a time through `next()` until it raises `StopIteration`.
+An iterable is a value you can loop over, like a list or string. An iterator gives you one item at a time when you call `next()`.
 
 ## Syntax
 ```python
@@ -9,21 +9,32 @@ first = next(iterator)
 
 ## Example
 ```python
-for line in open("notes.txt"):
-    print(line)
+with open("notes.txt", encoding="utf-8") as file:
+    for line in file:
+        print(line)
 ```
 
 ## When to use
-Most of the time, consume iterators with `for`, comprehensions, or built-ins such as `next()`.
+Most of the time, use a `for` loop; Python handles the iterator for you. Use `next()` when you need to choose when to get each item.
 
 ## When not to use
-Do not manually implement the protocol for ordinary loops; Python already handles it.
+Do not build an iterator just to run a normal loop; Python handles that for you.
 
 ## Common mistake
-An iterator is usually exhausted after one pass; create a new iterator from a reusable iterable to start again.
+An iterator usually runs out after one pass. Start again by making a new one from the original list or other source.
 
 ## Tip
-Iterators enable lazy processing without materializing an entire sequence in memory.
+Iterators can handle items one at a time instead of storing them all in memory.
 
 ## Remember
-`for` asks for an iterator and keeps requesting values until it is exhausted.
+`for` gets items one at a time until there are no more.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `iter(items)` | Makes an iterator from a list or other source. | `it = iter(names)` |
+| `next(it)` | Gets the next item; errors when exhausted. | `next(it)` |
+| `next(it, default)` | Gets the next item or a fallback. | `next(it, None)` |
+| `iter(callable, stop_value)` | Calls a function until it returns the stop value. | `iter(read_line, "")` |
+| `enumerate(items)` | Gives each item with its position. | `enumerate(names)` |
+| `itertools.islice(items, stop)` | Takes only a chosen number of items. | `itertools.islice(numbers, 3)` |

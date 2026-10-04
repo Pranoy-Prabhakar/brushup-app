@@ -1,5 +1,5 @@
 ## What is it?
-A set stores unique, hashable values. It gives fast average-case membership checks and useful set algebra.
+A set keeps one copy of each value. It is useful for quick checks and comparing groups.
 
 ## Syntax
 ```python
@@ -15,10 +15,10 @@ deduplicated = set(tags)
 ```
 
 ## When to use
-Use a set to remove duplicates or test membership repeatedly without caring about positional order.
+Use a set to remove repeats or check often whether a value is present. Sets do not keep useful positions.
 
 ## When not to use
-Do not use a set when duplicate counts or stable sequence positions matter.
+Do not use a set when repeats or item order matter.
 
 ## Common mistake
 `{}` creates an empty dictionary. Use `set()` for an empty set.
@@ -27,4 +27,14 @@ Do not use a set when duplicate counts or stable sequence positions matter.
 Use `a & b`, `a | b`, and `a - b` for intersection, union, and difference.
 
 ## Remember
-Sets keep one of each hashable value, not an indexable sequence.
+Sets keep one of each value; unlike lists, you cannot get an item by its position.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `set(items)` | Makes a set from items, removing duplicates. | `set([1, 1, 2])` |
+| `set.add(item)` | Adds one value. | `tags.add("docs")` |
+| `set.discard(item)` | Removes a value if present. | `tags.discard("old")` |
+| `set.remove(item)` | Removes a value; errors if missing. | `tags.remove("docs")` |
+| `a & b` | Keeps values in both sets. | `staff & online` |
+| `a | b` | Combines values from both sets. | `staff | online` |

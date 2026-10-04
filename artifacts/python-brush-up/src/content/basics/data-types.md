@@ -1,5 +1,5 @@
 ## What is it?
-Python values have types that determine which operations make sense. Core built-ins include `int`, `float`, `str`, `bool`, and `None`.
+Every Python value has a type. Its type tells Python what it can do. Common types are `int` (whole number), `float` (decimal), `str` (text), `bool` (true or false), and `None` (no value).
 
 ## Syntax
 ```python
@@ -17,13 +17,23 @@ message = f"Next: {number + 1}"
 ```
 
 ## When to use
-Choose a type that expresses the role of the data; convert explicitly at input and output boundaries.
+Choose a type that fits the value. Convert it when reading input or showing output.
 
 ## Common mistake
 `input()` always returns text. Comparing `"4"` with `4` does not compare equivalent values.
 
 ## Tip
-Use `is None` to test for the sentinel `None`; use `isinstance(value, int)` when type inspection is genuinely needed.
+Use `is None` to check for no value. Use `isinstance(value, int)` only when you need to check its type.
 
 ## Remember
-Types shape behavior, and conversion should be deliberate.
+Types shape what values can do. Convert on purpose.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `type(value)` | Shows a value's exact type. | `type(4)  # int` |
+| `isinstance(value, type)` | Checks a value's type, including subclasses. | `isinstance(4, int)` |
+| `int(value)` | Converts compatible input to an integer. | `int("12")  # 12` |
+| `float(value)` | Converts compatible input to a decimal number. | `float("2.5")` |
+| `str(value)` | Converts a value to text. | `str(12)  # "12"` |
+| `bool(value)` | Converts a value to True or False. | `bool("")  # False` |

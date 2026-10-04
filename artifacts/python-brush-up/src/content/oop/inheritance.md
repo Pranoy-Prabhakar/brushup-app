@@ -1,5 +1,5 @@
 ## What is it?
-Inheritance creates a specialized class from a parent class, reusing or overriding behavior.
+Inheritance makes a new class from an existing one. The new class can reuse or change its behavior.
 
 ## Syntax
 ```python
@@ -16,16 +16,25 @@ class TimedTask(Task):
 ```
 
 ## When to use
-Use inheritance when a subtype genuinely satisfies the parent's interface and can stand in for it.
+Use inheritance when the new class really is a kind of the parent and works in its place.
 
 ## When not to use
-Avoid inheritance solely to share a few lines; composition is often more flexible.
+Do not inherit just to share a few lines of code; using a helper object is often easier to change.
 
 ## Common mistake
-Overriding a method with incompatible behavior can violate what callers expect from the parent type.
+If a changed method behaves very differently, code expecting the parent class may break.
 
 ## Tip
 Use `super()` to extend parent initialization or behavior without naming the parent directly.
 
 ## Remember
-Inheritance models “is a”; keep the subtype substitutable for its parent.
+Inheritance means “is a”; a child should still work wherever its parent is expected.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `super()` | Calls a parent class method. | `super().__init__(name)` |
+| `isinstance(obj, Class)` | Checks a class or one of its parent classes. | `isinstance(task, Task)` |
+| `issubclass(Child, Parent)` | Checks whether one class inherits from another. | `issubclass(TimedTask, Task)` |
+| `type(obj)` | Shows an object's exact class. | `type(task)` |
+| `object.__str__()` | Provides a readable text form to override. | `def __str__(self): ...` |

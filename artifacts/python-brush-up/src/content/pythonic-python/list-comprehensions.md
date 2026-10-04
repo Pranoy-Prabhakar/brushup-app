@@ -1,9 +1,9 @@
 ## What is it?
-A list comprehension builds a list by transforming each item in an iterable, optionally filtering items.
+A list comprehension makes a new list by changing each item and, optionally, keeping only items that pass a check.
 
 ## Syntax
 ```python
-[expression for item in iterable if condition]
+[expression for item in items if condition]
 ```
 
 ## Example
@@ -13,16 +13,25 @@ clean = [name.strip().title() for name in names if name.strip()]
 ```
 
 ## When to use
-Use one for a short, readable transformation or filter that fits naturally on a line or two.
+Use one for a short, clear change or filter that fits on a line or two.
 
 ## When not to use
-Use a regular loop when the logic has multiple branches, side effects, or becomes difficult to scan.
+Use a regular loop when the steps are hard to read or do more than make the new list, such as changing another value or writing to a file.
 
 ## Common mistake
-Putting too much logic in the expression makes a concise comprehension less readable than a loop.
+Adding too much logic makes the comprehension harder to read than a regular loop.
 
 ## Tip
 Read it aloud as “expression for each item, if condition.”
 
 ## Remember
-Comprehensions transform and filter; they are not a home for side effects.
+Comprehensions change or filter items; do not use them for side effects.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `range(stop)` | Produces integers for a comprehension. | `[n * 2 for n in range(3)]` |
+| `enumerate(items)` | Supplies an index as well as each item. | `[(i, x) for i, x in enumerate(items)]` |
+| `zip(a, b)` | Combines matching items. | `[(a, b) for a, b in zip(xs, ys)]` |
+| `filter(function, items)` | Keeps items where a test is true. | `list(filter(str.isalpha, words))` |
+| `map(function, items)` | Applies a function to each item. | `list(map(str.upper, words))` |

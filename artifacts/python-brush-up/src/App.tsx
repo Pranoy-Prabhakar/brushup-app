@@ -2,20 +2,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, ChevronRight, Command, FileText, Moon, Search, Sun } from 'lucide-react';
 import { categories, getLesson, topics, type Topic } from './content/catalog';
-
-const refresher = [
-  { name: 'Variables', slug: 'variables', summary: 'Names point to values. Assignment binds or rebinds a name.', code: 'count = 3\\ncount += 1' },
-  { name: 'Conditions', slug: 'conditions', summary: 'The first true branch runs; use elif for another case.', code: 'if ready:\\n    start()\\nelse:\\n    wait()' },
-  { name: 'Loops', slug: 'loops', summary: 'Use for to visit each item; while repeats until a condition changes.', code: 'for item in items:\\n    process(item)' },
-  { name: 'Lists', slug: 'list', summary: 'Ordered, mutable sequences. Add with append; index from zero.', code: 'tasks = ["read", "ship"]\\ntasks.append("review")' },
-  { name: 'Dictionaries', slug: 'dictionary', summary: 'Map unique keys to values for fast, meaningful lookup.', code: 'user = {"name": "Mina"}\\nuser.get("role", "reader")' },
-  { name: 'Sets', slug: 'set', summary: 'Unique values; ideal for deduplication and membership checks.', code: 'unique = set(values)\\nshared = a & b' },
-  { name: 'Functions', slug: 'functions', summary: 'Name reusable behavior, accept parameters, return results.', code: 'def double(number):\\n    return number * 2' },
-  { name: 'Comprehensions', slug: 'list-comprehensions', summary: 'Transform and optionally filter in one readable expression.', code: '[x * 2 for x in values if x > 0]' },
-  { name: 'Exceptions', slug: 'try-except', summary: 'Catch specific failures where you can handle or explain them.', code: 'try:\\n    value = int(text)\\nexcept ValueError:\\n    value = 0' },
-  { name: 'Classes', slug: 'classes', summary: 'Bundle state and the behavior that maintains it.', code: 'class Counter:\\n    def __init__(self):\\n        self.value = 0' },
-  { name: 'Files', slug: 'file-handling', summary: 'A with block closes files reliably, even when something fails.', code: 'with open(path, encoding="utf-8") as f:\\n    text = f.read()' },
-];
+import { refresher, handyApis } from './content/refresher';
 
 function useTheme() {
   const [dark, setDark] = useState(() => localStorage.getItem('python-brush-up-theme') === 'dark');
@@ -34,7 +21,7 @@ function SearchBox() {
   const results = useMemo(() => {
     const term = query.trim().toLowerCase();
     if (!term) return [];
-    return topics.map((topic) => ({ topic, score: `${topic.title} ${topic.category} ${topic.summary} ${topic.keywords} ${topic.slug}`.toLowerCase().includes(term) ? 1 : 0 }))
+    return topics.map((topic) => ({ topic, score: `${topic.title} ${topic.category} ${topic.summary} ${topic.keywords} ${topic.slug} ${getLesson(topic.slug)?.markdown ?? ''}`.toLowerCase().includes(term) ? 1 : 0 }))
       .filter((item) => item.score).slice(0, 7).map((item) => item.topic);
   }, [query]);
   useEffect(() => {
@@ -55,7 +42,7 @@ function SearchBox() {
       <Search size={15} className="shrink-0 text-muted-foreground" />
       <input ref={inputRef} value={query} onChange={(event) => { setQuery(event.target.value); setOpen(true); }} onFocus={() => setOpen(true)}
         onKeyDown={(event) => { if (event.key === 'Enter' && results[0]) openResult(results[0]); }}
-        placeholder="Search Python..." aria-label="Search Python lessons" className="min-w-0 flex-1 bg-transparent text-[13px] outline-none placeholder:text-muted-foreground/75" />
+        placeholder="Search lessons or APIs..." aria-label="Search lessons and APIs" className="min-w-0 flex-1 bg-transparent text-[13px] outline-none placeholder:text-muted-foreground/75" />
       {!query && <kbd className="hidden sm:flex items-center gap-1 rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground"><Command size={10} /> K</kbd>}
       {query && <button onClick={() => { setQuery(''); setOpen(false); }} className="text-[11px] text-muted-foreground hover:text-foreground" aria-label="Clear search">Clear</button>}
     </div>
@@ -70,12 +57,39 @@ function SearchBox() {
 
 function Header({ dark, toggle }: { dark: boolean; toggle: () => void }) {
   const location = useLocation();
-  useEffect(() => { document.title = location.pathname === '/' ? 'Python Brush-Up — a quick field guide' : `${location.pathname.includes('quick-refresher') ? 'Quick refresher' : 'Python lessons'} · Python Brush-Up`; }, [location.pathname]);
+  useEffect(() => {
+    const topicSlug = location.pathname.match(/^\/topics\/([^/]+)$/)?.[1];
+    const topic = topicSlug ? getLesson(topicSlug)?.topic : undefined;
+    const title = location.pathname === '/'
+      ? 'Brushup — a quick field guide'
+      : location.pathname === '/quick-refresher'
+        ? 'Quick Python refresher · Brushup'
+        : location.pathname === '/topics'
+          ? 'Python topics · Brushup'
+          : topic
+            ? `${topic.title}: Python guide · Brushup`
+            : 'Brushup';
+    const description = location.pathname === '/'
+      ? 'Refresh what you know with plain-language notes, short examples, and useful reference tables. Brushup starts with Python and can grow with more topics.'
+      : location.pathname === '/quick-refresher'
+        ? 'Review 11 core Python ideas and handy built-ins, methods, and standard-library helpers with short examples.'
+        : location.pathname === '/topics'
+          ? 'Browse 26 short Python lessons about variables, collections, functions, classes, errors, files, and more.'
+          : topic
+            ? `${topic.summary} Read a plain-language explanation, short examples, common mistakes, and a table of related Python APIs.`
+            : 'Refresh coding concepts with plain-language lessons, short examples, and useful API tables.';
+    document.title = title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);
+  }, [location.pathname]);
   return <header className="sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur">
-    <div className="mx-auto flex h-[68px] max-w-[1180px] items-center gap-5 px-5 sm:px-8">
+    <div className="mx-auto flex h-[68px] max-w-[1180px] items-center gap-3 px-5 sm:gap-5 sm:px-8">
       <Link to="/" className="focus-ring flex shrink-0 items-center gap-2.5 rounded-md">
-        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary font-mono text-[13px] font-medium text-primary-foreground">py</span>
-        <span className="hidden text-[14px] font-semibold tracking-tight sm:block">Python <span className="font-normal text-muted-foreground">Brush-Up</span></span>
+        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary font-mono text-[13px] font-medium text-primary-foreground">b.</span>
+        <span className="text-[14px] font-semibold tracking-tight">Brushup</span>
       </Link>
       <nav className="hidden items-center gap-1 md:flex">
         <NavLink to="/topics" className={({ isActive }) => `rounded-md px-3 py-2 text-[13px] ${isActive ? 'bg-secondary font-medium text-foreground' : 'text-muted-foreground hover:text-foreground'}`}>Topics</NavLink>
@@ -96,7 +110,7 @@ function Header({ dark, toggle }: { dark: boolean; toggle: () => void }) {
 function Footer() {
   return <footer className="mt-20 border-t border-border">
     <div className="mx-auto flex max-w-[1180px] flex-col gap-2 px-5 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8">
-      <span>Python Brush-Up <span className="mx-1 text-border">/</span> A field guide for the bits you almost remember.</span>
+      <span>Brushup <span className="mx-1 text-border">/</span> A field guide for the bits you almost remember.</span>
       <span className="font-mono">26 lessons · no rabbit holes</span>
     </div>
   </footer>;
@@ -111,9 +125,9 @@ function HomePage() {
     <section className="relative grid gap-10 overflow-hidden rounded-2xl border border-border bg-card px-6 py-8 sm:grid-cols-[1fr_290px] sm:px-10 sm:py-11">
       <div className="absolute right-0 top-0 h-full w-1 bg-primary" />
       <div className="max-w-[650px]">
-        <SectionLabel>THE DEVELOPER'S FIELD GUIDE</SectionLabel>
-        <h1 className="max-w-xl font-serif text-[2.7rem] leading-[1.02] tracking-[-.035em] sm:text-[3.65rem]">Python<br className="hidden sm:block" /> <span className="whitespace-nowrap text-primary">Brush-Up</span></h1>
-        <p className="mt-5 max-w-lg text-[15px] leading-7 text-muted-foreground">Quickly remember Python concepts. Find the idea, get the syntax, and get back to building.</p>
+        <SectionLabel>A QUICK FIELD GUIDE</SectionLabel>
+        <h1 className="max-w-xl font-serif text-[2.7rem] leading-[1.02] tracking-[-.035em] sm:text-[3.65rem]"><span className="whitespace-nowrap text-primary">Brushup</span></h1>
+        <p className="mt-5 max-w-lg text-[15px] leading-7 text-muted-foreground">Quickly refresh what you know. Start with Python, find what you need, and keep going.</p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link to="/topics" className="focus-ring inline-flex h-10 items-center gap-2 rounded-lg bg-primary px-4 text-[13px] font-semibold text-primary-foreground hover:opacity-90">Browse all topics <ArrowRight size={15} /></Link>
           <Link to="/quick-refresher" className="focus-ring inline-flex h-10 items-center gap-2 rounded-lg border border-border bg-background px-4 text-[13px] font-medium hover:bg-secondary">Start Quick Refresher</Link>
@@ -201,6 +215,21 @@ function Markdown({ markdown }: { markdown: string }) {
       inCode = !inCode; continue;
     }
     if (inCode) { code.push(line); continue; }
+    if (line.trim().startsWith('|') && lines[i + 1]?.trim().startsWith('|')) {
+      const cells = (row: string) => row.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim());
+      const header = cells(line);
+      const bodyRows: string[] = [];
+      i += 1;
+      if (/^\|?\s*:?-{3,}/.test(lines[i].trim())) i += 1;
+      while (i < lines.length && lines[i].trim().startsWith('|')) bodyRows.push(lines[i++]);
+      i -= 1;
+      blocks.push(<div className="doc-table-wrap" key={`table-${i}`} role="region" aria-label={`${header[0]} reference table`} tabIndex={0}>
+        <table><thead><tr>{header.map((cell, index) => <th key={index}><InlineText text={cell} /></th>)}</tr></thead>
+          <tbody>{bodyRows.map((row, rowIndex) => <tr key={rowIndex}>{cells(row).map((cell, cellIndex) => <td key={cellIndex}><InlineText text={cell} /></td>)}</tr>)}</tbody>
+        </table>
+      </div>);
+      continue;
+    }
     if (line.startsWith('## ')) blocks.push(<h2 key={i}>{line.slice(3)}</h2>);
     else if (line.trim()) blocks.push(<p key={i}><InlineText text={line} /></p>);
   }
@@ -239,7 +268,7 @@ function LessonPage() {
 function QuickRefresherPage() {
   return <main className="mx-auto max-w-[1180px] px-5 pb-16 pt-9 sm:px-8">
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-6">
-      <div><SectionLabel>THE SHORT VERSION</SectionLabel><h1 className="font-serif text-4xl tracking-tight">Python Quick Refresher</h1><p className="mt-2 text-sm text-muted-foreground">Eleven concepts to get your bearings. Scan, remember, carry on.</p></div>
+      <div><SectionLabel>THE SHORT VERSION</SectionLabel><h1 className="font-serif text-4xl tracking-tight">Quick Refresher</h1><p className="mt-2 text-sm text-muted-foreground">Eleven concepts to get your bearings. Scan, remember, carry on.</p></div>
       <span className="font-mono text-[11px] text-muted-foreground">~ 2 MIN READ</span>
     </div>
     <div className="grid gap-x-8 md:grid-cols-2">
@@ -250,6 +279,12 @@ function QuickRefresherPage() {
         <Link to={`/topics/${item.slug}`} className="focus-ring mt-3 inline-flex items-center gap-1 rounded text-[11px] font-medium text-primary">Read the full note <ArrowRight size={12} /></Link>
       </article>)}
     </div>
+    <section className="mt-12">
+      <div className="mb-4 border-b border-border pb-4"><SectionLabel>KEEP THESE CLOSE</SectionLabel><h2 className="font-serif text-2xl">Handy APIs</h2><p className="mt-1 text-sm text-muted-foreground">Small tools you will reach for often.</p></div>
+      <div className="doc-table-wrap" role="region" aria-label="Handy Python APIs" tabIndex={0}><table><thead><tr><th>API or method</th><th>What it does</th><th>Short example</th></tr></thead><tbody>
+        {handyApis.map((api) => <tr key={api.name}><td><code>{api.name}</code></td><td>{api.description}</td><td><code>{api.example}</code></td></tr>)}
+      </tbody></table></div>
+    </section>
   </main>;
 }
 

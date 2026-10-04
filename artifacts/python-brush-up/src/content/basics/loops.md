@@ -1,5 +1,5 @@
 ## What is it?
-Loops repeat a block. A `for` loop asks an iterable for each item; `while` repeats while a condition remains true.
+Loops repeat code. A `for` loop visits each item in a collection (or other source of items). A `while` loop repeats as long as its check stays true.
 
 ## Syntax
 ```python
@@ -19,10 +19,10 @@ for score in scores:
 ```
 
 ## When to use
-Use `for` for each-item work. Use `while` when repetition depends on a condition that changes during the loop.
+Use `for` to work through items. Use `while` when you repeat until a check changes.
 
 ## When not to use
-Do not use a `while` loop when iterating a known collection; `for` is shorter and avoids index mistakes.
+Do not use `while` for a collection you can loop over directly; `for` is simpler and avoids index mistakes.
 
 ## Common mistake
 A `while` condition that never changes can loop forever. `break` exits; `continue` skips to the next iteration.
@@ -31,4 +31,14 @@ A `while` condition that never changes can loop forever. `break` exits; `continu
 For indices and values together, reach for `enumerate()` instead of a manual counter.
 
 ## Remember
-Iterate over values directly, and make loop termination obvious.
+Loop over values directly, and make it clear when a loop ends.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `range(stop)` | Produces a run of integers. | `range(3)  # 0, 1, 2` |
+| `enumerate(items)` | Yields each index and item. | `enumerate(names, start=1)` |
+| `zip(a, b)` | Yields matching items from iterables. | `zip(names, scores)` |
+| `reversed(items)` | Iterates over items in reverse order. | `reversed([1, 2])` |
+| `break` | Exits the current loop. | `if done: break` |
+| `continue` | Skips to the next loop item. | `if skip: continue` |

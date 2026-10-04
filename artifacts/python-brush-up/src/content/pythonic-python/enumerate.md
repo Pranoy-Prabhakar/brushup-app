@@ -1,5 +1,5 @@
 ## What is it?
-`enumerate()` yields each item together with a running index, without a separate counter variable.
+`enumerate()` gives each item with a running number, so you do not need a separate counter.
 
 ## Syntax
 ```python
@@ -15,13 +15,22 @@ for number, task in enumerate(tasks, start=1):
 ```
 
 ## When to use
-Use it whenever a loop needs both the current item and its position.
+Use it when a loop needs both an item and its position.
 
 ## Common mistake
-Do not pair `range(len(values))` with repeated indexing when you can loop over values directly.
+Avoid `range(len(values))` and repeated indexing when you can loop over the items directly.
 
 ## Tip
 Pass `start=1` for human-facing numbering while keeping Python's default zero-based indexing elsewhere.
 
 ## Remember
-`enumerate(iterable)` gives you `(index, value)` pairs.
+`enumerate()` gives each item with its index.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `enumerate(items)` | Pairs each item with its index. | `enumerate(names)` |
+| `enumerate(items, start=1)` | Starts the index at a chosen number. | `enumerate(names, start=1)` |
+| `range(stop)` | Produces numbers from zero up to (not including) stop. | `range(3)` |
+| `len(items)` | Counts items. | `len(names)` |
+| `list(enumerate(items))` | Makes all index-item pairs into a list. | `list(enumerate(names))` |

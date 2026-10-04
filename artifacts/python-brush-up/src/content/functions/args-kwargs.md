@@ -1,5 +1,5 @@
 ## What is it?
-`*args` gathers extra positional arguments into a tuple; `**kwargs` gathers extra keyword arguments into a dictionary.
+`*args` gathers extra values given by position into a tuple. `**kwargs` gathers extra named values into a dictionary.
 
 ## Syntax
 ```python
@@ -16,16 +16,25 @@ announce("Deploy", "email", "chat", urgent=True)
 ```
 
 ## When to use
-Use them for flexible wrappers, decorators, or APIs that intentionally accept a variable number of arguments.
+Use them when a function should accept any number of values, such as a wrapper around another function.
 
 ## When not to use
-Do not use them to avoid designing a clear function signature when the accepted inputs are already known.
+If you already know the inputs, name them in the function instead.
 
 ## Common mistake
-The names `args` and `kwargs` are conventions; the `*` and `**` markers do the collecting.
+`args` and `kwargs` are common names; `*` and `**` do the collecting.
 
 ## Tip
 Use descriptive names when the gathered values have a domain-specific role.
 
 ## Remember
-One star collects positional values; two stars collect named values.
+One star gathers extra positional values; two gather named values.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `*items` | Unpacks items as positional arguments. | `print(*["a", "b"])` |
+| `**mapping` | Unpacks keys as named arguments. | `greet(**{"name": "Ari"})` |
+| `tuple(args)` | Stores collected positional values as a tuple. | `args = tuple(args)` |
+| `dict(kwargs)` | Stores named options as a dictionary. | `options = dict(kwargs)` |
+| `len(args)` | Counts collected positional values. | `len(args)` |

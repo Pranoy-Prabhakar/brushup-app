@@ -1,5 +1,5 @@
 ## What is it?
-Composition builds a larger object by giving it smaller collaborator objects whose behavior it delegates to.
+Composition builds an object from smaller helper objects. The main object asks each helper to do its job.
 
 ## Syntax
 ```python
@@ -19,16 +19,25 @@ class Checkout:
 ```
 
 ## When to use
-Use composition to combine independent behaviors or swap collaborators without changing the host object.
+Use composition to combine separate jobs or swap a helper without changing the main object.
 
 ## When not to use
-Avoid wrapping every value in a class when a plain function or data structure is clearer.
+Do not make every value a class. A function or list may be clearer.
 
 ## Common mistake
-A collaborator should have a clear role; a vague “manager” dependency can hide too many responsibilities.
+Give each helper a clear job. A vague “manager” can end up doing too much.
 
 ## Tip
-Depend on the small behavior you need, not on a sprawling concrete implementation.
+Ask for the small action you need, not a large, complicated helper.
 
 ## Remember
-Composition models “has a”; delegate work to focused collaborators.
+Composition means “has a”; let each helper do its focused job.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `hasattr(obj, name)` | Checks whether an object has a named attribute. | `hasattr(payment, "charge")` |
+| `getattr(obj, name)` | Reads an attribute by name. | `getattr(payment, "charge")` |
+| `setattr(obj, name, value)` | Sets an attribute by name. | `setattr(report, "title", "Week")` |
+| `callable(value)` | Checks if a collaborator can be called. | `callable(payment.charge)` |
+| `isinstance(obj, type)` | Checks whether an object has a given type. | `isinstance(payment, Gateway)` |

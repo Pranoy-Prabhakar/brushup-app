@@ -1,5 +1,5 @@
 ## What is it?
-Parameters are names in a function definition; arguments are the values supplied when calling it. Python supports positional, keyword, and default arguments.
+Parameters are input names in a function. Arguments are the values you pass when calling it. You can pass them by position or name, and set default values.
 
 ## Syntax
 ```python
@@ -14,13 +14,22 @@ greet(name="Ari", punctuation=".")
 ```
 
 ## When to use
-Use keyword arguments for clarity when a call has several optional settings.
+Use named arguments when a call has several optional settings.
 
 ## Common mistake
-Avoid mutable defaults such as `items=[]`; that same list is reused across calls. Use `None` and create a list inside instead.
+Do not use a list like `items=[]` as a default. The same list is reused each time. Use `None` and make a new list inside.
 
 ## Tip
 Place required parameters before optional parameters.
 
 ## Remember
-Parameters define the function's interface; arguments fill it at the call site.
+Parameters name the inputs; arguments provide their values.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `*args` | Collects extra positional arguments. | `def f(first, *rest): ...` |
+| `**kwargs` | Collects extra named arguments. | `def f(**options): ...` |
+| `None` default | Lets a function create a fresh list per call. | `def f(items=None): ...` |
+| `inspect.signature()` | Shows a function's parameters. | `inspect.signature(greet)` |
+| `callable(value)` | Checks whether a value is a function-like object. | `callable(greet)` |

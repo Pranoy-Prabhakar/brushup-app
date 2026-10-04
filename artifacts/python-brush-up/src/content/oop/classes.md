@@ -1,5 +1,5 @@
 ## What is it?
-A class defines a type; each instance holds its own state and can expose behavior through methods.
+A class describes a kind of object. Each instance is one object with its own data and actions (methods).
 
 ## Syntax
 ```python
@@ -19,16 +19,26 @@ class Counter:
 ```
 
 ## When to use
-Use a class when data and the operations that maintain its rules belong together.
+Use a class when some data and the actions that work on it belong together.
 
 ## When not to use
-Prefer a simple function and built-in data structure when there is no meaningful object behavior or invariant.
+Use a simple function and a list or dictionary if there is no special behavior to keep track of.
 
 ## Common mistake
-Instance methods receive the instance as their first argument, conventionally named `self`.
+An instance method gets the current object first. By convention, that input is named `self`.
 
 ## Tip
-Initialize required instance state in `__init__` so every instance begins valid.
+Set required data in `__init__` so each new object is ready to use.
 
 ## Remember
-A class describes; an instance is the concrete object.
+A class is the plan; an instance is one object made from it.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `isinstance(obj, Class)` | Checks an object's class. | `isinstance(counter, Counter)` |
+| `type(obj)` | Shows an object's exact class. | `type(counter)` |
+| `self` | Names the current instance inside a method. | `self.value = 0` |
+| `__init__(self, ...)` | Sets up a new instance. | `def __init__(self, start=0): ...` |
+| `@property` | Lets a method be read like an attribute. | `@property` |
+| `super()` | Calls a parent class implementation. | `super().__init__()` |

@@ -1,5 +1,5 @@
 ## What is it?
-Strings are immutable sequences of Unicode text. They support slicing, searching, and formatting.
+Strings hold text. They cannot be changed in place, but you can search, slice, and format them.
 
 ## Syntax
 ```python
@@ -15,7 +15,7 @@ print(" / ".join(colors))
 ```
 
 ## When to use
-Use f-strings for readable interpolation and string methods for common text transformations.
+Use f-strings to put values into text. Use string methods for common text changes.
 
 ## Common mistake
 Strings cannot be changed in place; methods such as `replace()` return a new string.
@@ -24,4 +24,14 @@ Strings cannot be changed in place; methods such as `replace()` return a new str
 Use `.strip()` at input boundaries, not indiscriminately inside trusted content.
 
 ## Remember
-Text operations return new strings; f-strings keep formatting legible.
+String methods make new text; f-strings make values easy to read.
+
+## Useful built-ins and methods
+| API or method | what it does | short example |
+| --- | --- | --- |
+| `str.strip()` | Removes whitespace at both ends. | `" hi ".strip()` |
+| `str.split(sep)` | Splits text into a list. | `"a,b".split(",")` |
+| `str.join(items)` | Joins strings with a separator. | `", ".join(["a", "b"])` |
+| `str.replace(old, new)` | Replaces matching text. | `"tea".replace("t", "p")` |
+| `str.startswith(prefix)` | Checks the beginning of text. | `"notes.txt".startswith("notes")` |
+| `str.lower()` | Makes letters lowercase. | `"Hi".lower()` |
