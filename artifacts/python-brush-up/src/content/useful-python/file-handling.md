@@ -34,6 +34,9 @@ Open files inside `with`; Python closes them when the block ends.
 | `open(path, mode)` | Opens a file for reading or writing. | `open("notes.txt", encoding="utf-8")` |
 | `file.read()` | Reads file contents as text. | `text = file.read()` |
 | `file.readline()` | Reads one line. | `line = file.readline()` |
-| `file.write(text)` | Writes text to a file. | `file.write("Hello\n")` |
 | `file.readlines()` | Reads remaining lines into a list. | `lines = file.readlines()` |
+| `file.write(text)` | Writes text to a file. | `file.write("Hello\n")` |
+| `file.writelines(lines)` | Writes each provided string without adding separators. | `file.writelines(["one\n", "two\n"])` |
+| `file.seek(position)` / `file.tell()` | Moves or reports the current read/write position. | `file.seek(0)` |
+| `file.close()` | Closes a file opened without a with block. | `file.close()` |
 | `with` | Closes the file automatically after the block. | `with open(path) as file:` |

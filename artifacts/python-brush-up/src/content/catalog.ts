@@ -27,6 +27,20 @@ export const topics: Topic[] = [
   { title: 'Modules', slug: 'modules', category: 'Useful Python', summary: 'Organize code and import reusable names.', keywords: 'import module package' },
   { title: 'Iterators', slug: 'iterators', category: 'Pythonic Python', summary: 'Understand the protocol behind for loops.', keywords: 'iterator iterable next iter' },
   { title: 'Set operations', slug: 'set-operations', category: 'Collections', summary: 'Compare groups with union and intersection.', keywords: 'unique values union intersection difference' },
+  { title: 'Type Inspection', slug: 'type-inspection', category: 'Basics', summary: 'Find out what a value is and what it can do.', keywords: 'type isinstance id dir help callable inspect object' },
+  { title: 'Type Conversion', slug: 'type-conversion', category: 'Basics', summary: 'Turn a value into a type that fits the next task.', keywords: 'convert cast int float str bool list tuple set dict' },
+  { title: 'Input and Output', slug: 'input-output', category: 'Basics', summary: 'Read a response and show useful information.', keywords: 'input print output prompt display' },
+  { title: 'Number Helpers', slug: 'number-helpers', category: 'Basics', summary: 'Use small built-ins to compare and work with numbers.', keywords: 'abs round pow divmod min max sum' },
+  { title: 'Generators', slug: 'generators', category: 'Pythonic Python', summary: 'Produce values one at a time with yield.', keywords: 'yield generator expression next lazy iteration' },
+  { title: 'Decorators', slug: 'decorators', category: 'Pythonic Python', summary: 'Wrap a function to add behavior around its work.', keywords: 'decorator @ functools wraps staticmethod classmethod property' },
+  { title: 'Dataclasses', slug: 'dataclasses', category: 'OOP', summary: 'Make simple data-holding classes with less setup.', keywords: 'dataclass field asdict astuple replace records' },
+  { title: 'Type Hints', slug: 'type-hints', category: 'Functions', summary: 'Add readable notes about the values code expects.', keywords: 'typing list dict tuple set Optional Union Literal Callable TypeAlias Protocol Any annotations' },
+  { title: 'Date and Time', slug: 'date-time', category: 'Useful Python', summary: 'Create, read, format, and compare dates and times.', keywords: 'datetime date timedelta strptime strftime ISO standard library' },
+  { title: 'Collections Module', slug: 'collections-module', category: 'Collections', summary: 'Use ready-made containers for common data tasks.', keywords: 'collections Counter defaultdict deque namedtuple standard library' },
+  { title: 'itertools', slug: 'itertools', category: 'Pythonic Python', summary: 'Combine and group items without writing extra loops.', keywords: 'itertools chain count cycle repeat combinations permutations product groupby standard library' },
+  { title: 'functools', slug: 'functools', category: 'Pythonic Python', summary: 'Reuse function results and build functions from smaller parts.', keywords: 'functools wraps partial reduce cache lru_cache standard library' },
+  { title: 'Sorting', slug: 'sorting', category: 'Pythonic Python', summary: 'Put values in order, including by a detail you choose.', keywords: 'sorted sort key reverse ordering' },
+  { title: 'Testing', slug: 'testing', category: 'Useful Python', summary: 'Check that code gives the result you expect.', keywords: 'assert pytest raises fixture parametrize monkeypatch tests' },
 ];
 
 export const categories = ['Basics', 'Collections', 'Functions', 'Pythonic Python', 'OOP', 'Errors', 'Useful Python'];

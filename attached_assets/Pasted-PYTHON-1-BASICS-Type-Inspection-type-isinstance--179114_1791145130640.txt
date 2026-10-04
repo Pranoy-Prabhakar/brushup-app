@@ -1,0 +1,467 @@
+PYTHON
+│
+├── 1. BASICS
+│   │
+│   ├── Type / Inspection
+│   │   ├── type()
+│   │   ├── isinstance()
+│   │   ├── id()
+│   │   ├── dir()
+│   │   ├── help()
+│   │   └── callable()
+│   │
+│   ├── Type Conversion
+│   │   ├── int()
+│   │   ├── float()
+│   │   ├── str()
+│   │   ├── bool()
+│   │   ├── list()
+│   │   ├── tuple()
+│   │   ├── set()
+│   │   └── dict()
+│   │
+│   ├── Input / Output
+│   │   ├── print()
+│   │   └── input()
+│   │
+│   └── Number Helpers
+│       ├── abs()
+│       ├── round()
+│       ├── pow()
+│       ├── divmod()
+│       ├── min()
+│       ├── max()
+│       └── sum()
+│
+├── 2. STRINGS
+│   │
+│   ├── Creation
+│   │   └── str()
+│   │
+│   ├── Case
+│   │   ├── upper()
+│   │   ├── lower()
+│   │   ├── capitalize()
+│   │   ├── title()
+│   │   └── swapcase()
+│   │
+│   ├── Searching
+│   │   ├── find()
+│   │   ├── rfind()
+│   │   ├── index()
+│   │   ├── count()
+│   │   ├── startswith()
+│   │   └── endswith()
+│   │
+│   ├── Cleaning
+│   │   ├── strip()
+│   │   ├── lstrip()
+│   │   └── rstrip()
+│   │
+│   ├── Splitting / Joining
+│   │   ├── split()
+│   │   ├── rsplit()
+│   │   ├── splitlines()
+│   │   └── join()
+│   │
+│   ├── Replace
+│   │   └── replace()
+│   │
+│   ├── Validation
+│   │   ├── isalpha()
+│   │   ├── isdigit()
+│   │   ├── isnumeric()
+│   │   ├── isalnum()
+│   │   ├── isspace()
+│   │   ├── islower()
+│   │   └── isupper()
+│   │
+│   └── Formatting
+│       ├── format()
+│       └── f"...{value}..."
+│
+├── 3. CONDITIONS / BOOLEAN
+│   │
+│   ├── bool()
+│   ├── any()
+│   └── all()
+│
+├── 4. LOOPS
+│   │
+│   ├── range()
+│   ├── enumerate()
+│   ├── zip()
+│   ├── reversed()
+│   ├── sorted()
+│   ├── iter()
+│   └── next()
+│
+├── 5. LIST
+│   │
+│   ├── Create
+│   │   └── list()
+│   │
+│   ├── Add
+│   │   ├── append()
+│   │   ├── extend()
+│   │   └── insert()
+│   │
+│   ├── Remove
+│   │   ├── remove()
+│   │   ├── pop()
+│   │   └── clear()
+│   │
+│   ├── Search
+│   │   ├── index()
+│   │   └── count()
+│   │
+│   ├── Ordering
+│   │   ├── sort()
+│   │   └── reverse()
+│   │
+│   ├── Copy
+│   │   └── copy()
+│   │
+│   └── Useful Built-ins
+│       ├── len()
+│       ├── min()
+│       ├── max()
+│       ├── sum()
+│       ├── sorted()
+│       ├── enumerate()
+│       ├── zip()
+│       ├── any()
+│       └── all()
+│
+├── 6. TUPLE
+│   │
+│   ├── tuple()
+│   ├── count()
+│   ├── index()
+│   ├── len()
+│   ├── min()
+│   └── max()
+│
+├── 7. SET
+│   │
+│   ├── Create
+│   │   └── set()
+│   │
+│   ├── Add / Remove
+│   │   ├── add()
+│   │   ├── update()
+│   │   ├── remove()
+│   │   ├── discard()
+│   │   ├── pop()
+│   │   └── clear()
+│   │
+│   ├── Set Operations
+│   │   ├── union()
+│   │   ├── intersection()
+│   │   ├── difference()
+│   │   └── symmetric_difference()
+│   │
+│   ├── Relationship Checks
+│   │   ├── issubset()
+│   │   ├── issuperset()
+│   │   └── isdisjoint()
+│   │
+│   └── Operators
+│       ├── |
+│       ├── &
+│       ├── -
+│       └── ^
+│
+├── 8. DICTIONARY
+│   │
+│   ├── Create
+│   │   └── dict()
+│   │
+│   ├── Access
+│   │   ├── get()
+│   │   ├── keys()
+│   │   ├── values()
+│   │   └── items()
+│   │
+│   ├── Modify
+│   │   ├── update()
+│   │   └── setdefault()
+│   │
+│   ├── Remove
+│   │   ├── pop()
+│   │   ├── popitem()
+│   │   └── clear()
+│   │
+│   ├── Copy
+│   │   └── copy()
+│   │
+│   └── Creation Helpers
+│       └── fromkeys()
+│
+├── 9. FUNCTIONS
+│   │
+│   ├── Core
+│   │   ├── def
+│   │   ├── return
+│   │   ├── lambda
+│   │   ├── *args
+│   │   └── **kwargs
+│   │
+│   ├── Functional Helpers
+│   │   ├── map()
+│   │   ├── filter()
+│   │   ├── zip()
+│   │   ├── any()
+│   │   └── all()
+│   │
+│   └── Inspection
+│       ├── callable()
+│       └── getattr()
+│
+├── 10. COMPREHENSIONS
+│   │
+│   ├── List comprehension
+│   │
+│   │   [x * 2 for x in numbers]
+│   │
+│   ├── Set comprehension
+│   │
+│   │   {x for x in numbers}
+│   │
+│   ├── Dictionary comprehension
+│   │
+│   │   {x: x * 2 for x in numbers}
+│   │
+│   └── Generator expression
+│
+│       (x * 2 for x in numbers)
+│
+├── 11. OOP
+│   │
+│   ├── Object Helpers
+│   │   ├── isinstance()
+│   │   ├── issubclass()
+│   │   ├── type()
+│   │   ├── super()
+│   │   └── object()
+│   │
+│   ├── Attribute Handling
+│   │   ├── getattr()
+│   │   ├── setattr()
+│   │   ├── hasattr()
+│   │   └── delattr()
+│   │
+│   ├── Properties
+│   │   └── property()
+│   │
+│   └── Important Magic Methods
+│       ├── __init__()
+│       ├── __str__()
+│       ├── __repr__()
+│       ├── __len__()
+│       ├── __eq__()
+│       ├── __lt__()
+│       ├── __iter__()
+│       ├── __next__()
+│       ├── __enter__()
+│       └── __exit__()
+│
+├── 12. EXCEPTIONS
+│   │
+│   ├── try
+│   ├── except
+│   ├── else
+│   ├── finally
+│   └── raise
+│
+│   Common Exceptions
+│
+│   ├── Exception
+│   ├── ValueError
+│   ├── TypeError
+│   ├── KeyError
+│   ├── IndexError
+│   ├── AttributeError
+│   ├── FileNotFoundError
+│   ├── ZeroDivisionError
+│   └── RuntimeError
+│
+├── 13. FILE HANDLING
+│   │
+│   ├── open()
+│   │
+│   ├── File Methods
+│   │   ├── read()
+│   │   ├── readline()
+│   │   ├── readlines()
+│   │   ├── write()
+│   │   ├── writelines()
+│   │   ├── seek()
+│   │   ├── tell()
+│   │   └── close()
+│   │
+│   └── Context Manager
+│
+│       with open(...) as file:
+│
+├── 14. PATHLIB
+│   │
+│   ├── Path()
+│   ├── Path.exists()
+│   ├── Path.is_file()
+│   ├── Path.is_dir()
+│   ├── Path.mkdir()
+│   ├── Path.iterdir()
+│   ├── Path.glob()
+│   ├── Path.rglob()
+│   ├── Path.read_text()
+│   ├── Path.write_text()
+│   ├── Path.unlink()
+│   ├── Path.rename()
+│   ├── Path.name
+│   ├── Path.stem
+│   ├── Path.suffix
+│   └── Path.parent
+│
+├── 15. JSON
+│   │
+│   ├── json.loads()
+│   │      string → Python
+│   │
+│   ├── json.dumps()
+│   │      Python → string
+│   │
+│   ├── json.load()
+│   │      file → Python
+│   │
+│   └── json.dump()
+│          Python → file
+│
+├── 16. ITERATORS
+│   │
+│   ├── iter()
+│   ├── next()
+│   ├── __iter__()
+│   └── __next__()
+│
+├── 17. GENERATORS
+│   │
+│   ├── yield
+│   ├── next()
+│   └── generator expression
+│
+│       (x for x in values)
+│
+├── 18. DECORATORS
+│   │
+│   ├── @decorator
+│   │
+│   ├── functools.wraps()
+│   │
+│   ├── @staticmethod
+│   │
+│   ├── @classmethod
+│   │
+│   └── @property
+│
+├── 19. DATACLASSES
+│   │
+│   ├── @dataclass
+│   ├── field()
+│   ├── asdict()
+│   ├── astuple()
+│   └── replace()
+│
+├── 20. TYPE HINTS
+│   │
+│   ├── list[str]
+│   ├── dict[str, int]
+│   ├── tuple[str, int]
+│   ├── set[str]
+│   │
+│   ├── Optional
+│   ├── Union
+│   ├── Literal
+│   ├── Callable
+│   ├── TypeAlias
+│   ├── Protocol
+│   └── Any
+│
+├── 21. DATE / TIME
+│   │
+│   ├── datetime.now()
+│   ├── datetime.today()
+│   ├── datetime.strptime()
+│   ├── datetime.strftime()
+│   ├── timedelta()
+│   ├── date.today()
+│   └── datetime.fromisoformat()
+│
+├── 22. COLLECTIONS MODULE
+│   │
+│   ├── Counter
+│   ├── defaultdict
+│   ├── deque
+│   └── namedtuple
+│
+├── 23. ITERTOOLS
+│   │
+│   ├── chain()
+│   ├── count()
+│   ├── cycle()
+│   ├── repeat()
+│   ├── combinations()
+│   ├── permutations()
+│   ├── product()
+│   └── groupby()
+│
+├── 24. FUNCTOOLS
+│   │
+│   ├── wraps()
+│   ├── partial()
+│   ├── reduce()
+│   ├── cache()
+│   └── lru_cache()
+│
+├── 25. SORTING
+│   │
+│   ├── sorted()
+│   ├── list.sort()
+│   ├── key=
+│   └── reverse=
+│
+├── 26. TESTING
+│   │
+│   ├── assert
+│   │
+│   └── pytest
+│       ├── pytest.raises()
+│       ├── @pytest.fixture
+│       ├── @pytest.mark.parametrize
+│       └── monkeypatch
+│
+└── 27. VERY USEFUL BUILT-INS
+    │
+    ├── len()
+    ├── range()
+    ├── enumerate()
+    ├── zip()
+    ├── sorted()
+    ├── reversed()
+    ├── min()
+    ├── max()
+    ├── sum()
+    ├── any()
+    ├── all()
+    ├── abs()
+    ├── round()
+    ├── isinstance()
+    ├── type()
+    ├── print()
+    ├── input()
+    ├── open()
+    ├── iter()
+    ├── next()
+    ├── map()
+    ├── filter()
+    └── callable()

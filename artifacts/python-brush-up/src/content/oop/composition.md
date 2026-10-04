@@ -39,5 +39,6 @@ Composition means “has a”; let each helper do its focused job.
 | `hasattr(obj, name)` | Checks whether an object has a named attribute. | `hasattr(payment, "charge")` |
 | `getattr(obj, name)` | Reads an attribute by name. | `getattr(payment, "charge")` |
 | `setattr(obj, name, value)` | Sets an attribute by name. | `setattr(report, "title", "Week")` |
+| `delattr(obj, name)` | Removes a named attribute from an object. | `delattr(report, "title")` |
 | `callable(value)` | Checks if a collaborator can be called. | `callable(payment.charge)` |
 | `isinstance(obj, type)` | Checks whether an object has a given type. | `isinstance(payment, Gateway)` |

@@ -30,8 +30,17 @@ String methods make new text; f-strings make values easy to read.
 | API or method | what it does | short example |
 | --- | --- | --- |
 | `str.strip()` | Removes whitespace at both ends. | `" hi ".strip()` |
+| `str.lstrip()` / `str.rstrip()` | Removes whitespace from one end. | `" hi ".lstrip()` |
 | `str.split(sep)` | Splits text into a list. | `"a,b".split(",")` |
+| `str.rsplit()` / `str.splitlines()` | Splits from the right or at line breaks. | `"a\\nb".splitlines()` |
 | `str.join(items)` | Joins strings with a separator. | `", ".join(["a", "b"])` |
 | `str.replace(old, new)` | Replaces matching text. | `"tea".replace("t", "p")` |
-| `str.startswith(prefix)` | Checks the beginning of text. | `"notes.txt".startswith("notes")` |
-| `str.lower()` | Makes letters lowercase. | `"Hi".lower()` |
+| `str.find()` / `str.rfind()` | Finds the first or last matching position; returns -1 when absent. | `"banana".rfind("a")  # 5` |
+| `str.index()` / `str.count()` | Finds a match or counts its occurrences. | `"banana".count("a")  # 3` |
+| `str.startswith()` / `str.endswith()` | Checks the start or end of text. | `"notes.txt".endswith(".txt")` |
+| `str.upper()` / `str.lower()` | Changes letters to upper or lower case. | `"Hi".lower()  # "hi"` |
+| `str.capitalize()` / `str.title()` / `str.swapcase()` | Applies common letter-case changes. | `"hello world".title()` |
+| `str.isalpha()` / `str.isdigit()` / `str.isnumeric()` | Checks whether characters are letters or number characters. | `"42".isdigit()` |
+| `str.isalnum()` / `str.isspace()` | Checks for letters-or-numbers, or whitespace. | `" ".isspace()` |
+| `str.islower()` / `str.isupper()` | Checks the text's letter case. | `"HI".isupper()` |
+| `str.format()` / f-string | Inserts values into formatted text. | `f"Hi, {name}"` |

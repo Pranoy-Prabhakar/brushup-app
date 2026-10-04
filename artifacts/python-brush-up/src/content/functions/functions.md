@@ -31,6 +31,11 @@ Call a function with `()`; use `return` to send a value back.
 | --- | --- | --- |
 | `callable(value)` | Checks whether a value can be called. | `callable(len)  # True` |
 | `help(function)` | Shows built-in help for a function. | `help(sorted)` |
+| `getattr(obj, name)` | Reads an attribute by its text name. | `getattr(worker, "run")` |
+| `map(function, items)` | Applies a function to each item lazily. | `list(map(str.upper, words))` |
+| `filter(function, items)` | Keeps items where a test is true. | `list(filter(bool, values))` |
+| `any(items)` / `all(items)` | Checks whether any or every item is true. | `any([False, True])` |
 | `return` | Sends a result back to the caller. | `return price * count` |
 | `*args` | Accepts any number of positional values. | `def total(*values): ...` |
+| `**kwargs` | Accepts extra named values in a dictionary. | `def build(**options): ...` |
 | `lambda args: value` | Makes a small unnamed function. | `double = lambda n: n * 2` |

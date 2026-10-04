@@ -34,7 +34,9 @@ Sets keep one of each value; unlike lists, you cannot get an item by its positio
 | --- | --- | --- |
 | `set(items)` | Makes a set from items, removing duplicates. | `set([1, 1, 2])` |
 | `set.add(item)` | Adds one value. | `tags.add("docs")` |
+| `set.update(items)` | Adds values from another iterable. | `tags.update(["read", "write"])` |
 | `set.discard(item)` | Removes a value if present. | `tags.discard("old")` |
 | `set.remove(item)` | Removes a value; errors if missing. | `tags.remove("docs")` |
+| `set.pop()` / `set.clear()` | Removes an arbitrary item, or empties the set. | `tags.clear()` |
 | `a & b` | Keeps values in both sets. | `staff & online` |
 | `a | b` | Combines values from both sets. | `staff | online` |

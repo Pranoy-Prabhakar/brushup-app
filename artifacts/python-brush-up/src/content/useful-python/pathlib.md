@@ -38,5 +38,11 @@ Use `/` between `Path` objects to join paths safely.
 | `pathlib.Path / name` | Joins two path parts. | `Path("data") / "notes.txt"` |
 | `Path.exists()` | Checks whether a path exists. | `path.exists()` |
 | `Path.is_file()` | Checks whether a path is a file. | `path.is_file()` |
+| `Path.is_dir()` | Checks whether a path is a directory. | `path.is_dir()` |
+| `Path.mkdir()` | Creates a directory. | `path.mkdir(parents=True, exist_ok=True)` |
+| `Path.iterdir()` / `Path.glob()` | Lists direct children or matches a pattern. | `path.glob("*.txt")` |
+| `Path.rglob()` | Searches folders below this path for matches. | `path.rglob("*.md")` |
 | `Path.read_text()` | Reads a text file. | `path.read_text(encoding="utf-8")` |
 | `Path.write_text(text)` | Writes text to a file. | `path.write_text("Hi", encoding="utf-8")` |
+| `Path.unlink()` / `Path.rename()` | Deletes a file or renames a path. | `path.rename(path.with_name("new.txt"))` |
+| `Path.name`, `.stem`, `.suffix`, `.parent` | Reads the filename parts or containing folder. | `path.suffix  # ".txt"` |

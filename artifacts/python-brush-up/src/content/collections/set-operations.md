@@ -34,6 +34,7 @@ Use sets when unique values and group comparisons matter.
 | `a | b` | Combines both sets (union). | `readers | writers` |
 | `a & b` | Keeps shared values (intersection). | `readers & writers` |
 | `a - b` | Keeps values only in the left set. | `all_users - blocked` |
-| `a ^ b` | Keeps values in one set, but not both. | `a ^ b` |
+| `a ^ b` | Keeps values in either set, but not both. | `readers ^ writers` |
 | `set.issubset(other)` | Checks whether all values are in another set. | `small.issubset(big)` |
+| `set.issuperset(other)` | Checks whether this set contains another set. | `big.issuperset(small)` |
 | `set.isdisjoint(other)` | Checks whether sets have no shared values. | `a.isdisjoint(b)` |

@@ -25,7 +25,9 @@ A compact, searchable reference site for quickly refreshing software concepts. P
 
 ## Product
 
-- Home, topic index, topic detail, and a quick refresher
+- Responsive top-level module picker: Python is live; SQL is reserved for later
+- Python has a topic index, topic detail pages, and a Quick Refresher
+- SQL's Topics and Quick Refresher are explicitly marked as planned; do not invent SQL lessons before that content is requested
 - Client-side search across lessons and API names
 - Light and dark themes
 
@@ -37,6 +39,7 @@ A compact, searchable reference site for quickly refreshing software concepts. P
 ## Gotchas
 
 - Lesson Markdown tables are rendered by the app's own Markdown renderer; keep the table format consistent with existing lessons.
+- Use `/python/topics` and `/python/quick-refresher` for new Python links; keep the older `/topics` and `/quick-refresher` routes working for existing bookmarks.
 
 ## Pointers
 

@@ -38,7 +38,14 @@ A class is the plan; an instance is one object made from it.
 | --- | --- | --- |
 | `isinstance(obj, Class)` | Checks an object's class. | `isinstance(counter, Counter)` |
 | `type(obj)` | Shows an object's exact class. | `type(counter)` |
+| `issubclass(Child, Parent)` | Checks whether one class derives from another. | `issubclass(SpecialCounter, Counter)` |
+| `object()` | Base class from which ordinary classes inherit. | `class Counter: ...` |
 | `self` | Names the current instance inside a method. | `self.value = 0` |
 | `__init__(self, ...)` | Sets up a new instance. | `def __init__(self, start=0): ...` |
+| `__str__()` / `__repr__()` | Supplies readable or debugging text for an object. | `def __str__(self): return self.name` |
+| `__len__()` / `__eq__()` / `__lt__()` | Lets objects define length and comparisons. | `def __len__(self): return len(self.items)` |
+| `__iter__()` / `__next__()` | Lets an object provide items as an iterator. | `def __iter__(self): return iter(self.items)` |
+| `__enter__()` / `__exit__()` | Makes an object usable in a `with` block. | `with resource: ...` |
 | `@property` | Lets a method be read like an attribute. | `@property` |
+| `property()` | Built-in for defining managed attributes. | `name = property(get_name)` |
 | `super()` | Calls a parent class implementation. | `super().__init__()` |

@@ -36,5 +36,6 @@ Iterators can handle items one at a time instead of storing them all in memory.
 | `next(it)` | Gets the next item; errors when exhausted. | `next(it)` |
 | `next(it, default)` | Gets the next item or a fallback. | `next(it, None)` |
 | `iter(callable, stop_value)` | Calls a function until it returns the stop value. | `iter(read_line, "")` |
+| `__iter__()` / `__next__()` | Methods that make an object follow the iterator protocol. | `def __iter__(self): return self` |
 | `enumerate(items)` | Gives each item with its position. | `enumerate(names)` |
 | `itertools.islice(items, stop)` | Takes only a chosen number of items. | `itertools.islice(numbers, 3)` |

@@ -38,3 +38,6 @@ Dictionaries map keys to values; look up by name, not position.
 | `dict.items()` | Gives key-and-value pairs. | `user.items()` |
 | `dict.setdefault(key, default)` | Gets a key, adding its default if missing. | `counts.setdefault("tea", 0)` |
 | `dict.update(other)` | Adds or replaces entries. | `user.update({"active": True})` |
+| `dict.pop(key)` / `dict.popitem()` | Removes a named entry or the last inserted entry. | `user.pop("active")` |
+| `dict.clear()` / `dict.copy()` | Empties a dictionary or makes a shallow copy. | `backup = user.copy()` |
+| `dict.fromkeys(keys, value)` | Makes a dictionary using the same starting value. | `dict.fromkeys(["a", "b"], 0)` |

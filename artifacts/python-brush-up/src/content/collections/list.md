@@ -36,6 +36,12 @@ Lists keep order and can change; indexes start at zero.
 | `list.append(item)` | Adds one item at the end. | `items.append("pear")` |
 | `list.extend(items)` | Adds each item from another iterable. | `items.extend(["tea", "bread"])` |
 | `list.insert(index, item)` | Adds an item at a position. | `items.insert(0, "first")` |
-| `list.pop(index)` | Removes and returns an item. | `last = items.pop()` |
+| `list.remove(value)` / `list.pop(index)` | Removes a matching value or removes and returns by position. | `last = items.pop()` |
+| `list.clear()` | Removes every item. | `items.clear()` |
+| `list.index(value)` / `list.count(value)` | Finds the first position or counts matches. | `items.count("tea")` |
 | `list.sort()` | Sorts this list in place. | `scores.sort()` |
+| `list.reverse()` / `list.copy()` | Reverses this list in place or makes a shallow copy. | `backup = items.copy()` |
+| `len`, `min`, `max`, `sum` | Counts, finds extremes, or totals suitable values. | `sum([2, 3])  # 5` |
+| `sorted`, `enumerate`, `zip` | Returns sorted items, adds indexes, or pairs sequences. | `list(zip(names, scores))` |
+| `any(items)` / `all(items)` | Checks whether any or every list item is true. | `any([0, 2])  # True` |
 | `sorted(items)` | Returns a new sorted list. | `sorted(scores)` |

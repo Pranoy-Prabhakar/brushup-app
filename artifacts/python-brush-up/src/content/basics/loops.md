@@ -40,5 +40,8 @@ Loop over values directly, and make it clear when a loop ends.
 | `enumerate(items)` | Yields each index and item. | `enumerate(names, start=1)` |
 | `zip(a, b)` | Yields matching items from iterables. | `zip(names, scores)` |
 | `reversed(items)` | Iterates over items in reverse order. | `reversed([1, 2])` |
+| `sorted(items)` | Returns items in sorted order for a loop. | `for n in sorted(scores): ...` |
+| `iter(items)` | Makes an iterator that supplies items one at a time. | `iterator = iter(names)` |
+| `next(iterator)` | Gets the next item, or raises `StopIteration`. | `next(iterator)` |
 | `break` | Exits the current loop. | `if done: break` |
 | `continue` | Skips to the next loop item. | `if skip: continue` |
