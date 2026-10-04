@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background)); --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border)); --color-input: hsl(var(--input)); --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card)); --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover)); --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary)); --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary)); --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted)); --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent)); --color-accent-foreground: hsl(var(--accent-foreground));
+  --font-sans: var(--app-font-sans); --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px); --radius-md: calc(var(--radius) - 2px); --radius-lg: var(--radius);
+}
+:root {
+  color-scheme: light;
+  --background: 42 37% 96%; --foreground: 220 20% 19%; --card: 40 35% 99%; --card-foreground: 220 20% 19%;
+  --popover: 40 35% 99%; --popover-foreground: 220 20% 19%; --primary: 158 39% 34%; --primary-foreground: 42 37% 96%;
+  --secondary: 39 28% 91%; --secondary-foreground: 220 20% 24%; --muted: 39 20% 91%; --muted-foreground: 220 9% 47%;
+  --accent: 25 72% 54%; --accent-foreground: 42 37% 96%; --destructive: 0 65% 48%; --destructive-foreground: 42 37% 96%;
+  --border: 37 18% 84%; --input: 37 18% 84%; --ring: 158 39% 34%;
+  --app-font-sans: 'DM Sans', sans-serif; --app-font-serif: 'Newsreader', serif; --app-font-mono: 'DM Mono', monospace; --radius: .7rem;
+}
+.dark {
+  color-scheme: dark;
+  --background: 220 20% 12%; --foreground: 40 25% 89%; --card: 220 19% 15%; --card-foreground: 40 25% 89%;
+  --popover: 220 19% 15%; --popover-foreground: 40 25% 89%; --primary: 151 43% 56%; --primary-foreground: 220 24% 12%;
+  --secondary: 220 16% 21%; --secondary-foreground: 40 25% 89%; --muted: 220 16% 21%; --muted-foreground: 220 9% 65%;
+  --accent: 27 75% 62%; --accent-foreground: 220 24% 12%; --destructive: 0 60% 55%; --destructive-foreground: 40 25% 89%;
+  --border: 220 13% 27%; --input: 220 13% 27%; --ring: 151 43% 56%;
+}
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground antialiased; font-family: var(--app-font-sans); }
+  code, pre { font-family: var(--app-font-mono); }
+}
+.doc-prose h2 { font-family: var(--app-font-serif); font-size: 1.42rem; font-weight: 600; margin: 2rem 0 .6rem; color: hsl(var(--foreground)); }
+.doc-prose p { line-height: 1.75; color: hsl(var(--muted-foreground)); margin: .7rem 0; }
+.doc-prose pre { overflow-x: auto; border: 1px solid hsl(var(--border)); background: hsl(var(--background)); border-radius: .65rem; padding: 1rem 1.2rem; font-size: .82rem; line-height: 1.7; margin: .8rem 0 1.2rem; }
+.doc-prose code:not(pre code) { color: hsl(var(--primary)); background: hsl(var(--secondary)); padding: .12rem .3rem; border-radius: .25rem; font-size: .88em; }
+.doc-prose ul { color: hsl(var(--muted-foreground)); padding-left: 1.3rem; list-style: disc; line-height: 1.8; }
+.doc-prose strong { color: hsl(var(--foreground)); font-weight: 600; }
+.focus-ring:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 3px; }

@@ -1,0 +1,251 @@
+Build a simple responsive web application called **Python Brush-Up**.
+
+The purpose is to help developers who already learned Python quickly refresh forgotten Python concepts.
+
+The main goal is:
+
+**"I forgot this Python concept. Help me remember it in 2–3 minutes."**
+
+Do not over-engineer the application.
+
+## Tech
+
+Use:
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Router
+
+No backend.
+
+No database.
+
+No login.
+
+Use dark and light mode.
+
+---
+
+## Pages
+
+Create:
+
+* Home
+* Topics
+* Topic Detail
+* Quick Refresher
+
+---
+
+## Homepage
+
+Show:
+
+**Python Brush-Up**
+
+"Quickly remember Python concepts."
+
+Search bar:
+
+`Search Python...`
+
+Button:
+
+`Start Quick Refresher`
+
+Then show topic categories:
+
+* Basics
+* Collections
+* Functions
+* Pythonic Python
+* OOP
+* Errors
+* Useful Python
+
+---
+
+## Topics
+
+Start with approximately these topics:
+
+Basics:
+
+* Variables
+* Data Types
+* Conditions
+* Loops
+
+Collections:
+
+* List
+* Tuple
+* Set
+* Dictionary
+
+Functions:
+
+* Functions
+* Parameters
+* *args
+* **kwargs
+
+Pythonic Python:
+
+* List Comprehensions
+* enumerate
+* zip
+
+OOP:
+
+* Classes
+* Inheritance
+* Composition
+
+Errors:
+
+* try/except
+* raise
+
+Useful Python:
+
+* File Handling
+* JSON
+* pathlib
+
+---
+
+## Topic Format
+
+Every topic should have:
+
+### What is it?
+
+Short explanation.
+
+### Syntax
+
+Small code example.
+
+### Example
+
+Realistic example.
+
+### When to use
+
+Short explanation.
+
+### When not to use
+
+Only when useful.
+
+### Common mistake
+
+One common mistake.
+
+### Tip
+
+One useful Python tip.
+
+### Remember
+
+One short memory line.
+
+---
+
+## Content Architecture
+
+Keep Python content separate from React components.
+
+For example:
+
+```text
+src/
+  content/
+      basics/
+      collections/
+      functions/
+      oop/
+```
+
+Prefer Markdown files.
+
+Example:
+
+```text
+src/content/collections/dictionary.md
+```
+
+React components should render the content rather than contain individual lessons.
+
+---
+
+## Search
+
+Add a simple client-side search.
+
+Users should be able to search terms such as:
+
+* dictionary
+* unique values
+* args
+* loops
+* classes
+
+and open the relevant topic.
+
+---
+
+## Quick Refresher
+
+Create one page called:
+
+**Python Quick Refresher**
+
+Cover:
+
+* Variables
+* Conditions
+* Loops
+* Lists
+* Dictionaries
+* Sets
+* Functions
+* Comprehensions
+* Exceptions
+* Classes
+* Files
+
+For each concept show:
+
+* short explanation
+* small code example
+* link to full topic
+
+Keep this page highly skimmable.
+
+---
+
+## Design
+
+The UI should feel like a combination of:
+
+* developer documentation
+* coding cheat sheet
+* clean notebook
+
+Keep it simple and compact.
+
+Avoid:
+
+* excessive animations
+* large marketing sections
+* dashboards
+* gamification
+* unnecessary dependencies
+
+The site should be easy to keep open beside an IDE while coding.
+
+Build the simplest clean version first.

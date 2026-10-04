@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Python Brush-Up"
+description = "A compact, searchable Python refresher for developers who want to recall forgotten concepts in two or three minutes. Includes Markdown-driven topic lessons, a quick refresher, and light and dark themes with no backend or account required."
+version = "1.0.0"
+id = "artifacts/python-brush-up"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18553
+
+[services.development]
+run = "pnpm --filter @workspace/python-brush-up run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/python-brush-up", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/python-brush-up/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18553"
+BASE_PATH = "/"
