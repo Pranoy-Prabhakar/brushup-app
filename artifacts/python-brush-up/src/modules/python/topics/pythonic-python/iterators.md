@@ -1,3 +1,13 @@
+---
+title: "Iterators"
+slug: "iterators"
+category: "Pythonic Python"
+summary: "Understand the protocol behind for loops."
+keywords: "iterator iterable next iter"
+order: 25
+related: ["generators", "loops", "itertools"]
+---
+
 ## What is it?
 An iterable is a value you can loop over, like a list or string. An iterator gives you one item at a time when you call `next()`.
 

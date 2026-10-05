@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/python-brush-up",
+  "name": "@workspace/brushup-web",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -63,8 +63,8 @@
     "react-dom": "catalog:",
     "react-hook-form": "^7.55.0",
     "react-icons": "^5.4.0",
-    "react-router-dom": "^6.30.1",
     "react-resizable-panels": "^2.1.7",
+    "react-router-dom": "^6.30.1",
     "recharts": "^2.15.2",
     "sonner": "^2.0.7",
     "tailwind-merge": "catalog:",
@@ -74,5 +74,12 @@
     "vite": "catalog:",
     "wouter": "^3.3.5",
     "zod": "catalog:"
+  },
+  "dependencies": {
+    "github-slugger": "^2.0.0",
+    "react-markdown": "^10.1.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "yaml": "^2.9.1"
   }
 }

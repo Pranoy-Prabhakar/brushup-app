@@ -1,3 +1,13 @@
+---
+title: "Conditions"
+slug: "conditions"
+category: "Basics"
+summary: "Choose a path with if, elif, and else."
+keywords: "if elif else branching"
+order: 3
+related: ["loops", "functions", "testing"]
+---
+
 ## What is it?
 Conditions choose which code runs when something is true or false. Indentation shows where each block starts and ends.
 

@@ -1,3 +1,13 @@
+---
+title: "Testing"
+slug: "testing"
+category: "Useful Python"
+summary: "Check that code gives the result you expect."
+keywords: "assert pytest raises fixture parametrize monkeypatch tests"
+order: 40
+related: ["functions", "try-except", "type-hints"]
+---
+
 ## What is it?
 Testing checks that code behaves as expected. A small test can catch a mistake before it reaches someone using the program.
 

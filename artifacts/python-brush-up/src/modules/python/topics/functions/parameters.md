@@ -1,3 +1,13 @@
+---
+title: "Parameters"
+slug: "parameters"
+category: "Functions"
+summary: "Pass information into a function clearly."
+keywords: "arguments args parameters defaults keyword"
+order: 10
+related: ["args-kwargs", "functions", "type-hints"]
+---
+
 ## What is it?
 Parameters are input names in a function. Arguments are the values you pass when calling it. You can pass them by position or name, and set default values.
 

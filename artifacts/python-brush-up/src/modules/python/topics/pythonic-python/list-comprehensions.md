@@ -1,3 +1,13 @@
+---
+title: "List Comprehensions"
+slug: "list-comprehensions"
+category: "Pythonic Python"
+summary: "Build a list with a compact expression."
+keywords: "comprehension list transform filter"
+order: 12
+related: ["generators", "loops", "itertools"]
+---
+
 ## What is it?
 A list comprehension makes a new list by changing each item and, optionally, keeping only items that pass a check.
 

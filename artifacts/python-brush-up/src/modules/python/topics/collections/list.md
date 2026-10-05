@@ -1,3 +1,13 @@
+---
+title: "List"
+slug: "list"
+category: "Collections"
+summary: "An ordered, changeable sequence."
+keywords: "lists append index sequence"
+order: 5
+related: ["list-comprehensions", "sorting", "collections-module"]
+---
+
 ## What is it?
 A list keeps items in order and can be changed. It can hold different kinds of values, but similar items are easier to work with.
 

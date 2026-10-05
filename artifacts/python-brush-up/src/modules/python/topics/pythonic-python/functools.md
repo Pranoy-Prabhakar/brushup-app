@@ -1,3 +1,13 @@
+---
+title: "functools"
+slug: "functools"
+category: "Pythonic Python"
+summary: "Reuse function results and build functions from smaller parts."
+keywords: "functools wraps partial reduce cache lru_cache standard library"
+order: 38
+related: ["decorators", "functions", "iterators"]
+---
+
 ## What is it?
 The standard-library `functools` module contains helpers for working with functions. It can preserve a wrapped function's details, pre-fill an argument, or remember results.
 

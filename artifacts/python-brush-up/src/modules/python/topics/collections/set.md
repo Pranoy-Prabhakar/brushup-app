@@ -1,3 +1,13 @@
+---
+title: "Set"
+slug: "set"
+category: "Collections"
+summary: "Unique values and fast membership checks."
+keywords: "sets unique values deduplicate membership"
+order: 7
+related: ["set-operations", "collections-module", "dictionary"]
+---
+
 ## What is it?
 A set keeps one copy of each value. It is useful for quick checks and comparing groups.
 

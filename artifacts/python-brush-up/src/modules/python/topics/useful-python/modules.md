@@ -1,3 +1,13 @@
+---
+title: "Modules"
+slug: "modules"
+category: "Useful Python"
+summary: "Organize code and import reusable names."
+keywords: "import module package"
+order: 24
+related: ["functions", "testing", "pathlib"]
+---
+
 ## What is it?
 A module is a Python file you can import into another file. A package groups related modules.
 

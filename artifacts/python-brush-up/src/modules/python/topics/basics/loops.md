@@ -1,3 +1,13 @@
+---
+title: "Loops"
+slug: "loops"
+category: "Basics"
+summary: "Repeat work with for and while."
+keywords: "for while iteration iterate"
+order: 4
+related: ["iterators", "enumerate", "list-comprehensions"]
+---
+
 ## What is it?
 Loops repeat code. A `for` loop visits each item in a collection (or other source of items). A `while` loop repeats as long as its check stays true.
 

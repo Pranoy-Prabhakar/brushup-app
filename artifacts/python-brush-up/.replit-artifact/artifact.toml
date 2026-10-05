@@ -1,7 +1,7 @@
 kind = "web"
 previewPath = "/"
 title = "Brushup"
-description = "A compact, searchable topic refresher with clear lessons, quick-reference tables, and a skimmable cheat sheet. Starts with Python and is structured to grow with more subjects."
+description = "A modular reference site for quickly refreshing software concepts through focused lessons, quick-reference tables, and skimmable refreshers."
 version = "1.0.0"
 id = "artifacts/python-brush-up"
 router = "path"
@@ -12,10 +12,10 @@ paths = [ "/" ]
 localPort = 18553
 
 [services.development]
-run = "pnpm --filter @workspace/python-brush-up run dev"
+run = "pnpm --filter @workspace/brushup-web run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/python-brush-up", "run", "build" ]
+build = [ "pnpm", "--filter", "@workspace/brushup-web", "run", "build" ]
 serve = "static"
 publicDir = "artifacts/python-brush-up/dist/public"
 

@@ -1,3 +1,13 @@
+---
+title: "enumerate"
+slug: "enumerate"
+category: "Pythonic Python"
+summary: "Loop over values with their index."
+keywords: "index loop counter"
+order: 13
+related: ["zip", "loops", "iterators"]
+---
+
 ## What is it?
 `enumerate()` gives each item with a running number, so you do not need a separate counter.
 

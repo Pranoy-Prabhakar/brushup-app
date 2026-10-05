@@ -1,3 +1,13 @@
+---
+title: "Functions"
+slug: "functions"
+category: "Functions"
+summary: "Name reusable behavior and return a result."
+keywords: "def return reusable"
+order: 9
+related: ["parameters", "type-hints", "decorators"]
+---
+
 ## What is it?
 A function is a named block of code you can reuse. It can take inputs and send back a result.
 

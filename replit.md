@@ -4,8 +4,8 @@ A compact, searchable reference site for quickly refreshing software concepts. P
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/python-brush-up run dev` — run the Brushup web app
-- `pnpm --filter @workspace/python-brush-up run typecheck` — check the app's TypeScript
+- `pnpm --filter @workspace/brushup-web run dev` — run the Brushup web app
+- `pnpm --filter @workspace/brushup-web run typecheck` — check the app's TypeScript
 
 ## Stack
 
@@ -14,21 +14,22 @@ A compact, searchable reference site for quickly refreshing software concepts. P
 
 ## Where things live
 
-- `artifacts/python-brush-up/src/App.tsx` — routes, shared layout, search, and page rendering
-- `artifacts/python-brush-up/src/content/` — topic catalog, refresher copy, and Markdown lessons
+- `artifacts/python-brush-up/src/App.tsx` — shared routes, layout, search, and page rendering
+- `artifacts/python-brush-up/src/modules/` — module registry, module configuration, and topic content
+- `artifacts/python-brush-up/src/modules/<module>/topics/` — Markdown lessons with frontmatter metadata
 
 ## Architecture decisions
 
-- Keep lesson copy outside React components so topic sets can grow independently from the UI.
+- Keep lesson copy and its metadata together in Markdown so topic sets can grow independently from the UI.
 - Keep Python as the first subject collection, not part of the product name.
 - Use short plain-English explanations and compact API/method tables so lessons are easy to scan.
 
 ## Product
 
-- Responsive top-level module picker: Python is live; SQL is reserved for later
+- Responsive module picker: Python is live; SQL, PySpark, and System Design are planned
 - Python has a topic index, topic detail pages, and a Quick Refresher
-- SQL's Topics and Quick Refresher are explicitly marked as planned; do not invent SQL lessons before that content is requested
-- Client-side search across lessons and API names
+- Planned modules are explicitly labeled; do not invent lesson content before it is requested
+- Global client-side search spans all live modules
 - Light and dark themes
 
 ## User preferences
@@ -38,7 +39,7 @@ A compact, searchable reference site for quickly refreshing software concepts. P
 
 ## Gotchas
 
-- Lesson Markdown tables are rendered by the app's own Markdown renderer; keep the table format consistent with existing lessons.
+- Lesson Markdown is rendered with `react-markdown` and GitHub-flavored Markdown.
 - Use `/python/topics` and `/python/quick-refresher` for new Python links; keep the older `/topics` and `/quick-refresher` routes working for existing bookmarks.
 
 ## Pointers

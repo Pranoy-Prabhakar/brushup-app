@@ -39,11 +39,18 @@
   code, pre { font-family: var(--app-font-mono); }
 }
 .doc-prose h2 { font-family: var(--app-font-serif); font-size: 1.42rem; font-weight: 600; margin: 2rem 0 .6rem; color: hsl(var(--foreground)); }
+.doc-prose h2, .doc-prose h3, .doc-prose h4, .doc-prose h5, .doc-prose h6 { scroll-margin-top: 6rem; }
+.doc-prose h3, .doc-prose h4, .doc-prose h5, .doc-prose h6 { margin: 1.5rem 0 .5rem; font-size: 1.08rem; font-weight: 600; color: hsl(var(--foreground)); }
 .doc-prose p { line-height: 1.75; color: hsl(var(--muted-foreground)); margin: .7rem 0; }
 .doc-prose pre { overflow-x: auto; border: 1px solid hsl(var(--border)); background: hsl(var(--background)); border-radius: .65rem; padding: 1rem 1.2rem; font-size: .82rem; line-height: 1.7; margin: .8rem 0 1.2rem; }
+.doc-prose pre code { color: hsl(var(--foreground)); }
 .doc-prose code:not(pre code) { color: hsl(var(--primary)); background: hsl(var(--secondary)); padding: .12rem .3rem; border-radius: .25rem; font-size: .88em; }
-.doc-prose ul { color: hsl(var(--muted-foreground)); padding-left: 1.3rem; list-style: disc; line-height: 1.8; }
+.doc-prose ul, .doc-prose ol { color: hsl(var(--muted-foreground)); padding-left: 1.3rem; line-height: 1.8; margin: .7rem 0; }
+.doc-prose ul { list-style: disc; }
+.doc-prose ol { list-style: decimal; }
 .doc-prose strong { color: hsl(var(--foreground)); font-weight: 600; }
+.doc-prose a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 3px; }
+.doc-prose blockquote { border-left: 2px solid hsl(var(--accent)); padding-left: 1rem; color: hsl(var(--muted-foreground)); }
 .doc-table-wrap { max-width: 100%; overflow-x: auto; margin: 1rem 0 1.5rem; border: 1px solid hsl(var(--border)); border-radius: .65rem; background: hsl(var(--card)); -webkit-overflow-scrolling: touch; }
 .doc-table-wrap:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 3px; }
 .doc-table-wrap table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .78rem; line-height: 1.55; text-align: left; }

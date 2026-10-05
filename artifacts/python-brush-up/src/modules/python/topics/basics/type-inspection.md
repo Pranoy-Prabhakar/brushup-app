@@ -1,3 +1,13 @@
+---
+title: "Type Inspection"
+slug: "type-inspection"
+category: "Basics"
+summary: "Find out what a value is and what it can do."
+keywords: "type isinstance id dir help callable inspect object"
+order: 27
+related: ["type-conversion", "data-types", "type-hints"]
+---
+
 ## What is it?
 Type inspection means asking Python about a value. It helps when a program must handle different kinds of values or when you are exploring unfamiliar code.
 

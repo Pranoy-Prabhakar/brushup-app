@@ -1,3 +1,13 @@
+---
+title: "Strings"
+slug: "strings"
+category: "Basics"
+summary: "Create, format, and inspect text."
+keywords: "string text f-string format"
+order: 23
+related: ["input-output", "type-conversion", "data-types"]
+---
+
 ## What is it?
 Strings hold text. They cannot be changed in place, but you can search, slice, and format them.
 

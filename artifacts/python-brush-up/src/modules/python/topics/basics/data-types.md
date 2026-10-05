@@ -1,3 +1,13 @@
+---
+title: "Data Types"
+slug: "data-types"
+category: "Basics"
+summary: "The built-in values Python works with."
+keywords: "types str int float bool none"
+order: 2
+related: ["type-conversion", "type-inspection", "variables"]
+---
+
 ## What is it?
 Every Python value has a type. Its type tells Python what it can do. Common types are `int` (whole number), `float` (decimal), `str` (text), `bool` (true or false), and `None` (no value).
 

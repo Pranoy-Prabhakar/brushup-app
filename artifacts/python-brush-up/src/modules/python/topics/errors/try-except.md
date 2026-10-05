@@ -1,3 +1,13 @@
+---
+title: "try / except"
+slug: "try-except"
+category: "Errors"
+summary: "Handle expected failures at a boundary."
+keywords: "exception errors catch finally"
+order: 18
+related: ["raise", "file-handling", "testing"]
+---
+
 ## What is it?
 `try` runs code that may fail. `except` handles a matching error. `else` runs if it worked; `finally` runs either way.
 

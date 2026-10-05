@@ -1,3 +1,13 @@
+---
+title: "raise"
+slug: "raise"
+category: "Errors"
+summary: "Signal that an operation cannot continue."
+keywords: "raise exception errors"
+order: 19
+related: ["try-except", "testing", "functions"]
+---
+
 ## What is it?
 `raise` reports an error so the caller knows the operation could not continue.
 

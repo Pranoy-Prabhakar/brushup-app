@@ -1,3 +1,13 @@
+---
+title: "pathlib"
+slug: "pathlib"
+category: "Useful Python"
+summary: "Work with filesystem paths as objects."
+keywords: "path directory file pathlib"
+order: 22
+related: ["file-handling", "modules", "date-time"]
+---
+
 ## What is it?
 `pathlib.Path` is an object for a file or folder location. It has handy ways to join, read, and check paths.
 

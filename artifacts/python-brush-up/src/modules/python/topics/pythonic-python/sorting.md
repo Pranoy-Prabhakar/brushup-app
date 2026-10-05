@@ -1,3 +1,13 @@
+---
+title: "Sorting"
+slug: "sorting"
+category: "Pythonic Python"
+summary: "Put values in order, including by a detail you choose."
+keywords: "sorted sort key reverse ordering"
+order: 39
+related: ["list", "itertools", "number-helpers"]
+---
+
 ## What is it?
 Sorting puts values in order. Python can return a newly sorted list or rearrange an existing list; a `key` function chooses which detail to compare.
 

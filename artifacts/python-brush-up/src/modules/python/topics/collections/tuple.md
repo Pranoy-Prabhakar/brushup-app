@@ -1,3 +1,13 @@
+---
+title: "Tuple"
+slug: "tuple"
+category: "Collections"
+summary: "An ordered sequence that stays fixed."
+keywords: "tuples immutable unpack"
+order: 6
+related: ["functions", "type-hints", "dataclasses"]
+---
+
 ## What is it?
 A tuple is an ordered group of values that cannot be changed. Use it for a small, fixed set of details.
 

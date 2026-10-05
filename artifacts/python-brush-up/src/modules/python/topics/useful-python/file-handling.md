@@ -1,3 +1,13 @@
+---
+title: "File Handling"
+slug: "file-handling"
+category: "Useful Python"
+summary: "Read and write files safely with context managers."
+keywords: "files open read write with"
+order: 20
+related: ["pathlib", "json", "try-except"]
+---
+
 ## What is it?
 Use `open()` to read or write a file. A `with` block closes it for you, even if an error happens.
 

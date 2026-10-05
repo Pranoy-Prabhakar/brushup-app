@@ -1,3 +1,13 @@
+---
+title: "Classes"
+slug: "classes"
+category: "OOP"
+summary: "Bundle state and behavior into an object."
+keywords: "class object self init"
+order: 15
+related: ["dataclasses", "composition", "inheritance"]
+---
+
 ## What is it?
 A class describes a kind of object. Each instance is one object with its own data and actions (methods).
 

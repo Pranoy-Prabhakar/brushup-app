@@ -1,3 +1,13 @@
+---
+title: "Number Helpers"
+slug: "number-helpers"
+category: "Basics"
+summary: "Use small built-ins to compare and work with numbers."
+keywords: "abs round pow divmod min max sum"
+order: 30
+related: ["data-types", "sorting", "type-conversion"]
+---
+
 ## What is it?
 Number helpers are built-in functions for everyday arithmetic: measuring distance from zero, rounding, splitting, or finding totals and extremes.
 

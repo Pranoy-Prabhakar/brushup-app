@@ -1,35 +1,61 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from 'react';
 import { BrowserRouter, Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, BookOpen, ChevronRight, Clock3, Command, FileText, Moon, Search, Sun } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, ChevronRight, Clock3, Command, FileText, Moon, Search, Sun } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
+import GithubSlugger from 'github-slugger';
 import { getModule, getModuleFromPath, modulePath, modules } from './modules/registry';
 import type { LearningModule, Topic } from './modules/types';
 
+const liveModules = modules.filter((module) => module.status === 'live');
+
 function useTheme() {
-  const [dark, setDark] = useState(() => localStorage.getItem('python-brush-up-theme') === 'dark');
+  const [dark, setDark] = useState(() => localStorage.getItem('brushup-theme') === 'dark');
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
-    localStorage.setItem('python-brush-up-theme', dark ? 'dark' : 'light');
+    localStorage.setItem('brushup-theme', dark ? 'dark' : 'light');
   }, [dark]);
   return { dark, toggle: () => setDark((value) => !value) };
 }
 
-function SearchBox({ module }: { module: LearningModule }) {
+type SearchResult = { module: LearningModule; topic: Topic; score: number; moduleOrder: number };
+
+function scoreTopic(topic: Topic, markdown: string, query: string) {
+  const title = topic.title.toLowerCase();
+  const keywords = topic.keywords.toLowerCase();
+  const summary = topic.summary.toLowerCase();
+  const body = markdown.toLowerCase();
+  if (title === query) return 100;
+  if (title.startsWith(query)) return 80;
+  if (title.includes(query)) return 60;
+  if (keywords.includes(query)) return 40;
+  if (summary.includes(query)) return 20;
+  if (body.includes(query)) return 10;
+  return 0;
+}
+
+function SearchBox() {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const results = useMemo(() => {
-    const term = query.trim().toLowerCase();
+    const term = query.trim().toLowerCase().replace(/\s+/g, ' ');
     if (!term) return [];
-    return module.topics
+    return liveModules.flatMap((module, moduleOrder) => module.topics
       .map((topic) => ({
+        module,
         topic,
-        matches: `${topic.title} ${topic.category} ${topic.summary} ${topic.keywords} ${topic.slug} ${module.getLesson(topic.slug)?.markdown ?? ''}`.toLowerCase().includes(term),
+        moduleOrder,
+        score: scoreTopic(topic, module.getLesson(topic.slug)?.markdown ?? '', term),
       }))
-      .filter((item) => item.matches)
-      .slice(0, 7)
-      .map((item) => item.topic);
-  }, [module, query]);
+      .filter((result) => result.score > 0))
+      .sort((left, right) => right.score - left.score || left.moduleOrder - right.moduleOrder || left.topic.order - right.topic.order)
+      .slice(0, 8);
+  }, [query]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -37,44 +63,135 @@ function SearchBox({ module }: { module: LearningModule }) {
         event.preventDefault();
         inputRef.current?.focus();
         setOpen(true);
-      }
-      if (event.key === 'Escape') {
-        setOpen(false);
-        inputRef.current?.blur();
+        setSelectedIndex(-1);
       }
     };
+    const onPointer = (event: PointerEvent) => {
+      if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false);
+    };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer);
+    };
   }, []);
 
-  function openResult(topic: Topic) {
-    navigate(`${modulePath(module.id)}/topics/${topic.slug}`);
+  function openResult(result: SearchResult) {
+    navigate(`${modulePath(result.module.id)}/topics/${result.topic.slug}`);
     setQuery('');
     setOpen(false);
     inputRef.current?.blur();
   }
 
-  return <div className="relative w-full max-w-[330px]">
+  function handleKeyDown(event: ReactKeyboardEvent<HTMLInputElement>) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setOpen(false);
+      inputRef.current?.blur();
+      return;
+    }
+    if (!results.length) return;
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setOpen(true);
+      setSelectedIndex((index) => (index + 1 + results.length) % results.length);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setOpen(true);
+      setSelectedIndex((index) => (index <= 0 ? results.length - 1 : index - 1));
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      openResult(results[selectedIndex] ?? results[0]);
+    }
+  }
+
+  return <div ref={wrapperRef} className="relative w-full min-w-0">
     <div className={`flex h-10 items-center gap-2 rounded-lg border bg-background px-3 transition-colors ${open ? 'border-primary/60' : 'border-border'}`}>
       <Search size={15} className="shrink-0 text-muted-foreground" />
       <input
         ref={inputRef}
         value={query}
-        onChange={(event) => { setQuery(event.target.value); setOpen(true); }}
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={open && !!query.trim()}
+        aria-controls="global-search-results"
+        aria-activedescendant={open && results.length && selectedIndex >= 0 ? `search-result-${selectedIndex}` : undefined}
+        onChange={(event) => { setQuery(event.target.value); setSelectedIndex(-1); setOpen(true); }}
         onFocus={() => setOpen(true)}
-        onKeyDown={(event) => { if (event.key === 'Enter' && results[0]) openResult(results[0]); }}
-        placeholder={`Search ${module.title} lessons or APIs...`}
-        aria-label={`Search ${module.title} lessons and APIs`}
+        onKeyDown={handleKeyDown}
+        placeholder="Search all live modules..."
+        aria-label="Search all live modules"
+        data-testid="input-global-search"
         className="min-w-0 flex-1 bg-transparent text-[13px] outline-none placeholder:text-muted-foreground/75"
       />
       {!query && <kbd className="hidden items-center gap-1 rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground sm:flex"><Command size={10} /> K</kbd>}
       {query && <button onClick={() => { setQuery(''); setOpen(false); }} className="text-[11px] text-muted-foreground hover:text-foreground" aria-label="Clear search">Clear</button>}
     </div>
-    {open && query.trim() && <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 overflow-hidden rounded-xl border border-border bg-card shadow-xl shadow-foreground/10">
-      {results.length ? <div className="p-1.5">{results.map((topic) => <button key={topic.slug} onClick={() => openResult(topic)} className="focus-ring flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left hover:bg-secondary">
-        <span><span className="block text-sm font-medium">{topic.title}</span><span className="mt-0.5 block text-[11px] text-muted-foreground">{topic.category} · {topic.summary}</span></span><ArrowRight size={14} className="text-muted-foreground" />
+    {open && query.trim() && <div id="global-search-results" role="listbox" aria-label="Search results" className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 overflow-hidden rounded-xl border border-border bg-card shadow-xl shadow-foreground/10">
+      {results.length ? <div className="p-1.5">{results.map((result, index) => <button
+        id={`search-result-${index}`}
+        key={`${result.module.id}-${result.topic.slug}`}
+        role="option"
+        aria-selected={selectedIndex === index}
+        data-testid={`search-result-${result.module.id}-${result.topic.slug}`}
+        onMouseEnter={() => setSelectedIndex(index)}
+        onClick={() => openResult(result)}
+        className={`focus-ring flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left ${selectedIndex === index ? 'bg-secondary' : 'hover:bg-secondary'}`}
+      >
+        <span><span className="block text-sm font-medium">{result.topic.title}</span><span className="mt-0.5 block text-[11px] text-muted-foreground">{result.module.title} · {result.topic.category}</span></span>
+        <ArrowRight size={14} className="text-muted-foreground" />
       </button>)}</div> : <div className="px-4 py-5 text-center text-sm text-muted-foreground">No lessons found for “{query}”.</div>}
-      <div className="border-t border-border px-3 py-2 text-[10px] text-muted-foreground">Search titles, keywords, and concepts</div>
+      <div className="border-t border-border px-3 py-2 text-[10px] text-muted-foreground">Ranked by title, keywords, summary, and lesson content</div>
+    </div>}
+  </div>;
+}
+
+function ModuleSelector({ activeModule }: { activeModule?: LearningModule }) {
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onPointer = (event: PointerEvent) => {
+      if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('pointerdown', onPointer);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onPointer);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, []);
+
+  return <div ref={wrapperRef} className="relative col-start-2 row-start-1 md:order-2">
+    <button
+      type="button"
+      aria-haspopup="menu"
+      aria-expanded={open}
+      aria-controls="module-selector-menu"
+      data-testid="button-module-selector"
+      onClick={() => setOpen((value) => !value)}
+      className="focus-ring inline-flex max-w-[150px] items-center gap-1 rounded-md px-2.5 py-2 text-[12px] font-medium hover:bg-secondary sm:max-w-[190px]"
+    >
+      <span className="truncate">{activeModule?.title ?? 'All modules'}</span><ChevronDown size={13} className="shrink-0 text-muted-foreground" />
+    </button>
+    {open && <div id="module-selector-menu" role="menu" aria-label="Choose a module" className="absolute left-0 top-[calc(100%+8px)] z-50 w-64 overflow-hidden rounded-xl border border-border bg-card p-1.5 shadow-xl shadow-foreground/10">
+      <Link role="menuitem" to="/" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2.5 text-sm hover:bg-secondary">All modules</Link>
+      <div className="my-1 border-t border-border" />
+      {modules.map((module) => <Link
+        role="menuitem"
+        aria-current={activeModule?.id === module.id ? 'page' : undefined}
+        key={module.id}
+        to={modulePath(module.id)}
+        onClick={() => setOpen(false)}
+        data-testid={`module-option-${module.id}`}
+        className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm hover:bg-secondary"
+      >
+        <span>{module.title}</span><span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">{module.status}</span>
+      </Link>)}
     </div>}
   </div>;
 }
@@ -114,48 +231,32 @@ function Header({ dark, toggle }: { dark: boolean; toggle: () => void }) {
   }, [description, title]);
 
   return <header className="sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur">
-    <div className="mx-auto flex h-[68px] max-w-[1180px] items-center gap-3 px-5 sm:gap-5 sm:px-8">
-      <Link to="/" className="focus-ring flex shrink-0 items-center gap-2.5 rounded-md">
+    <div className="mx-auto grid max-w-[1180px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 gap-y-2 px-5 py-2 sm:gap-x-4 sm:px-8 md:flex md:h-[68px] md:gap-4 md:py-0">
+      <Link to="/" data-testid="link-home" className="focus-ring col-start-1 row-start-1 flex shrink-0 items-center gap-2.5 rounded-md md:order-1">
         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary font-mono text-[13px] font-medium text-primary-foreground">b.</span>
         <span className="text-[14px] font-semibold tracking-tight">Brushup</span>
       </Link>
-      <nav aria-label="Modules" className="hidden items-center gap-1 border-l border-border pl-3 md:flex">
-        {modules.map((module) => <NavLink
-          key={module.id}
-          to={modulePath(module.id)}
-          className={({ isActive }) => `rounded-md px-2.5 py-2 text-[12px] ${isActive ? 'bg-secondary font-medium text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
-        >{module.title}</NavLink>)}
-      </nav>
-      {activeModule?.status === 'live' && <nav aria-label={`${activeModule.title} sections`} className="hidden items-center gap-1 border-l border-border pl-3 md:flex">
-        <NavLink to={`${modulePath(activeModule.id)}/topics`} className={({ isActive }) => `rounded-md px-2.5 py-2 text-[12px] ${isActive ? 'font-medium text-primary' : 'text-muted-foreground hover:text-foreground'}`}>Topics</NavLink>
-        <NavLink to={`${modulePath(activeModule.id)}/quick-refresher`} className={({ isActive }) => `rounded-md px-2.5 py-2 text-[12px] ${isActive ? 'font-medium text-primary' : 'text-muted-foreground hover:text-foreground'}`}>Quick Refresher</NavLink>
+      <ModuleSelector activeModule={activeModule} />
+      {activeModule?.status === 'live' && <nav aria-label={`${activeModule.title} sections`} className="col-span-3 row-start-2 flex items-center gap-1 border-t border-border/70 pt-1 md:order-3 md:col-span-1 md:row-start-auto md:border-l md:border-t-0 md:pl-2 md:pt-0">
+        <NavLink to={`${modulePath(activeModule.id)}/topics`} data-testid="link-module-topics" className={({ isActive }) => `rounded-md px-2.5 py-2 text-[12px] ${isActive ? 'font-medium text-primary' : 'text-muted-foreground hover:text-foreground'}`}>Topics</NavLink>
+        <NavLink to={`${modulePath(activeModule.id)}/quick-refresher`} data-testid="link-module-refresher" className={({ isActive }) => `rounded-md px-2.5 py-2 text-[12px] ${isActive ? 'font-medium text-primary' : 'text-muted-foreground hover:text-foreground'}`}>Quick Refresher</NavLink>
       </nav>}
-      {activeModule?.status === 'live' && activeModule.topics.length > 0 && <div className="ml-auto w-full max-w-[300px] sm:max-w-[320px]"><SearchBox module={activeModule} /></div>}
-      <button onClick={toggle} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} className={`focus-ring ${!activeModule || activeModule.status !== 'live' || !activeModule.topics.length ? 'ml-auto' : ''} flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground hover:bg-secondary hover:text-foreground`}>
+      <div className="col-span-3 row-start-3 min-w-0 md:order-4 md:ml-auto md:w-full md:max-w-[330px]">
+        <SearchBox />
+      </div>
+      <button onClick={toggle} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} data-testid="button-toggle-theme" className="focus-ring col-start-3 row-start-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground hover:bg-secondary hover:text-foreground md:order-5">
         {dark ? <Sun size={17} /> : <Moon size={17} />}
       </button>
     </div>
-    <nav aria-label="Module navigation" className="mx-auto border-t border-border/70 px-5 py-1.5 md:hidden sm:px-8">
-      <div className="flex items-center gap-1 overflow-x-auto">
-        {modules.map((module) => <NavLink
-          key={module.id}
-          to={modulePath(module.id)}
-          className={({ isActive }) => `shrink-0 rounded px-2.5 py-1 text-[11px] ${isActive ? 'bg-secondary font-medium text-foreground' : 'text-muted-foreground'}`}
-        >{module.title}</NavLink>)}
-      </div>
-      {activeModule?.status === 'live' && <div className="mt-1 flex items-center gap-1 border-t border-border/70 pt-1">
-        <NavLink to={`${modulePath(activeModule.id)}/topics`} className={({ isActive }) => `rounded px-2 py-1 text-[11px] ${isActive ? 'font-medium text-primary' : 'text-muted-foreground'}`}>Topics</NavLink>
-        <NavLink to={`${modulePath(activeModule.id)}/quick-refresher`} className={({ isActive }) => `rounded px-2 py-1 text-[11px] ${isActive ? 'font-medium text-primary' : 'text-muted-foreground'}`}>Quick Refresher</NavLink>
-      </div>}
-    </nav>
   </header>;
 }
 
 function Footer() {
+  const topicCount = liveModules.reduce((total, module) => total + module.topics.length, 0);
   return <footer className="mt-20 border-t border-border">
     <div className="mx-auto flex max-w-[1180px] flex-col gap-2 px-5 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8">
       <span>Brushup <span className="mx-1 text-border">/</span> A field guide for the bits you almost remember.</span>
-      <span className="font-mono">{modules.length} learning modules</span>
+      <span className="font-mono">{modules.length} modules · {liveModules.length} live · {topicCount} published topics</span>
     </div>
   </footer>;
 }
@@ -305,44 +406,69 @@ function TopicsPage() {
   </main>;
 }
 
-function InlineText({ text }: { text: string }) {
-  const pieces = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
-  return <>{pieces.map((part, index) => part.startsWith('`') ? <code key={index}>{part.slice(1, -1)}</code> : part.startsWith('**') ? <strong key={index}>{part.slice(2, -2)}</strong> : part)}</>;
+function Markdown({ markdown }: { markdown: string }) {
+  return <div className="doc-prose">
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeSlug]}
+      components={{
+        table: ({ node: _node, children, ...props }) => <div className="doc-table-wrap" role="region" aria-label="Lesson reference table" tabIndex={0}><table {...props}>{children}</table></div>,
+      }}
+    >{markdown}</ReactMarkdown>
+  </div>;
 }
 
-function Markdown({ markdown }: { markdown: string }) {
-  const lines = markdown.trim().split('\n');
-  const blocks: React.ReactNode[] = [];
-  let code: string[] = [];
-  let inCode = false;
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    if (line.startsWith('```')) {
-      if (inCode) { blocks.push(<pre key={`code-${index}`}><code>{code.join('\n')}</code></pre>); code = []; }
-      inCode = !inCode;
+type LessonHeading = { text: string; id: string; depth: number };
+
+function extractMarkdownHeadings(markdown: string): LessonHeading[] {
+  const slugger = new GithubSlugger();
+  const headings: LessonHeading[] = [];
+  let fence: string | undefined;
+
+  for (const line of markdown.split(/\r?\n/)) {
+    const fenceMatch = line.match(/^ {0,3}(`{3,}|~{3,})/);
+    if (fenceMatch) {
+      const marker = fenceMatch[1][0];
+      if (!fence) fence = marker;
+      else if (fence === marker) fence = undefined;
       continue;
     }
-    if (inCode) { code.push(line); continue; }
-    if (line.trim().startsWith('|') && lines[index + 1]?.trim().startsWith('|')) {
-      const cells = (row: string) => row.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim());
-      const header = cells(line);
-      const bodyRows: string[] = [];
-      index += 1;
-      if (/^\|?\s*:?-{3,}/.test(lines[index].trim())) index += 1;
-      while (index < lines.length && lines[index].trim().startsWith('|')) bodyRows.push(lines[index++]);
-      index -= 1;
-      blocks.push(<div className="doc-table-wrap" key={`table-${index}`} role="region" aria-label={`${header[0]} reference table`} tabIndex={0}>
-        <table><thead><tr>{header.map((cell, cellIndex) => <th key={cellIndex}><InlineText text={cell} /></th>)}</tr></thead>
-          <tbody>{bodyRows.map((row, rowIndex) => <tr key={rowIndex}>{cells(row).map((cell, cellIndex) => <td key={cellIndex}><InlineText text={cell} /></td>)}</tr>)}</tbody>
-        </table>
-      </div>);
-      continue;
-    }
-    if (line.startsWith('## ')) blocks.push(<h2 key={index}>{line.slice(3)}</h2>);
-    else if (line.trim()) blocks.push(<p key={index}><InlineText text={line} /></p>);
+    if (fence) continue;
+
+    const match = line.match(/^ {0,3}(#{1,6})\s+(.+?)\s*#*\s*$/);
+    if (!match) continue;
+    const depth = match[1].length;
+    const text = match[2]
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/<[^>]+>/g, '')
+      .replace(/\*\*|__|~~|\*|_/g, '')
+      .trim();
+    const id = slugger.slug(text);
+    if (depth > 1 && text) headings.push({ text, id, depth });
   }
-  if (code.length) blocks.push(<pre key="final-code"><code>{code.join('\n')}</code></pre>);
-  return <div className="doc-prose">{blocks}</div>;
+  return headings;
+}
+
+function TableOfContents({ headings }: { headings: LessonHeading[] }) {
+  if (!headings.length) return null;
+  return <nav aria-label="In this note" className="border-l border-border pl-4">
+    <span className="mb-2 block font-mono text-[10px] uppercase tracking-wider text-muted-foreground">IN THIS NOTE</span>
+    {headings.map((heading) => <a
+      key={`${heading.id}-${heading.depth}`}
+      href={`#${heading.id}`}
+      className={`block py-1.5 text-[12px] leading-5 text-muted-foreground hover:text-primary ${heading.depth > 2 ? 'pl-3' : ''}`}
+    >{heading.text}</a>)}
+  </nav>;
+}
+
+function RelatedTopics({ module, topics }: { module: LearningModule; topics: Topic[] }) {
+  if (!topics.length) return null;
+  return <section className="border-t border-border pt-5">
+    <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">RELATED TOPICS</span>
+    {topics.map((item) => <Link key={item.slug} to={`${modulePath(module.id)}/topics/${item.slug}`} className="mt-3 block text-[12px] hover:text-primary">{item.title} <ArrowRight size={11} className="inline text-muted-foreground" /></Link>)}
+  </section>;
 }
 
 function LessonPage() {
@@ -353,24 +479,41 @@ function LessonPage() {
   const found = module.getLesson(slug);
   if (!found?.markdown) return <main className="mx-auto max-w-3xl px-5 py-24 text-center"><h1 className="font-serif text-3xl">Lesson not found</h1><p className="mt-3 text-muted-foreground">This page may have moved. Try the topic index.</p><Link to={`${modulePath(module.id)}/topics`} className="mt-5 inline-block text-primary">Browse topics</Link></main>;
   const { topic, markdown } = found;
-  const related = module.topics.filter((entry) => entry.category === topic.category && entry.slug !== topic.slug).slice(0, 3);
+  const headings = extractMarkdownHeadings(markdown);
+  const related = topic.related.flatMap((relatedSlug) => {
+    const relatedTopic = module.topics.find((entry) => entry.slug === relatedSlug);
+    return relatedTopic ? [relatedTopic] : [];
+  });
+  const topicIndex = module.topics.findIndex((entry) => entry.slug === topic.slug);
+  const previous = module.topics[topicIndex - 1];
+  const next = module.topics[topicIndex + 1];
   const base = modulePath(module.id);
   return <main className="mx-auto max-w-[1180px] px-5 pb-16 pt-7 sm:px-8">
     <div className="mb-8 flex flex-wrap items-center gap-2 text-xs text-muted-foreground"><Link to="/" className="hover:text-primary">Brushup</Link><ChevronRight size={12} /><Link to={base} className="hover:text-primary">{module.title}</Link><ChevronRight size={12} /><Link to={`${base}/topics`} className="hover:text-primary">Topics</Link><ChevronRight size={12} /><span>{topic.category}</span><ChevronRight size={12} /><span className="text-foreground">{topic.title}</span></div>
     <div className="grid gap-12 lg:grid-cols-[minmax(0,720px)_240px]">
       <article>
         <div className="mb-7 border-b border-border pb-6"><span className="font-mono text-[10px] uppercase tracking-[.15em] text-primary">{topic.category} · QUICK NOTE</span><h1 className="mt-2 font-serif text-[2.65rem] leading-tight tracking-tight sm:text-5xl">{topic.title}</h1><p className="mt-3 max-w-xl text-[15px] leading-7 text-muted-foreground">{topic.summary}</p></div>
+        <div className="mb-7 lg:hidden"><TableOfContents headings={headings} /></div>
         <Markdown markdown={markdown} />
-        <div className="mt-10 flex items-center justify-between border-t border-border pt-5">
-          <Link to={`${base}/topics`} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft size={14} /> Topic index</Link>
-          <Link to={`${base}/quick-refresher`} className="inline-flex items-center gap-2 text-sm font-medium text-primary">Quick Refresher <ArrowRight size={14} /></Link>
+        <div className="mt-8 lg:hidden"><RelatedTopics module={module} topics={related} /></div>
+        <nav aria-label="Topic navigation" className="mt-10 grid grid-cols-2 gap-3 border-t border-border pt-5">
+          {previous ? <Link to={`${base}/topics/${previous.slug}`} data-testid="link-previous-topic" className="focus-ring rounded-lg p-2 text-left hover:bg-secondary">
+            <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"><ArrowLeft size={12} /> Previous</span>
+            <span className="mt-1 block text-sm font-medium">{previous.title}</span>
+          </Link> : <span aria-hidden="true" />}
+          {next ? <Link to={`${base}/topics/${next.slug}`} data-testid="link-next-topic" className="focus-ring rounded-lg p-2 text-right hover:bg-secondary">
+            <span className="flex items-center justify-end gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Next <ArrowRight size={12} /></span>
+            <span className="mt-1 block text-sm font-medium">{next.title}</span>
+          </Link> : <span aria-hidden="true" />}
+        </nav>
+        <div className="mt-4 text-center">
+          <span className="font-mono text-[10px] text-muted-foreground">{topicIndex + 1} / {module.topics.length}</span>
         </div>
       </article>
       <aside className="hidden lg:block">
-        <div className="sticky top-24 border-l border-border pl-5">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">IN THIS NOTE</span>
-          {['What is it?', 'Syntax', 'Example', 'When to use', 'Common mistake', 'Tip', 'Remember'].map((item) => <div key={item} className="py-2 text-[12px] text-muted-foreground">{item}</div>)}
-          {!!related.length && <div className="mt-7 border-t border-border pt-5"><span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">NEARBY TOPICS</span>{related.map((item) => <Link key={item.slug} to={`${base}/topics/${item.slug}`} className="mt-3 block text-[12px] hover:text-primary">{item.title} <ArrowRight size={11} className="inline text-muted-foreground" /></Link>)}</div>}
+        <div className="sticky top-24 space-y-7">
+          <TableOfContents headings={headings} />
+          <RelatedTopics module={module} topics={related} />
         </div>
       </aside>
     </div>

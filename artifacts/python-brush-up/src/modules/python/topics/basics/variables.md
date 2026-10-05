@@ -1,3 +1,13 @@
+---
+title: "Variables"
+slug: "variables"
+category: "Basics"
+summary: "Names, values, and assignment in Python."
+keywords: "variable assignment name state"
+order: 1
+related: ["data-types", "type-conversion", "type-inspection"]
+---
+
 ## What is it?
 A variable is a name that points to a value. Python gets the type from that value, and you can point the name to a new value later.
 

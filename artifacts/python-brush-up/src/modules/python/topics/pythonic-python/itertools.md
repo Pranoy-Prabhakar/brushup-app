@@ -1,3 +1,13 @@
+---
+title: "itertools"
+slug: "itertools"
+category: "Pythonic Python"
+summary: "Combine and group items without writing extra loops."
+keywords: "itertools chain count cycle repeat combinations permutations product groupby standard library"
+order: 37
+related: ["iterators", "generators", "enumerate"]
+---
+
 ## What is it?
 The standard-library `itertools` module offers tools for combining, repeating, and grouping iterable values. Many return iterators, so values arrive only as you ask for them.
 

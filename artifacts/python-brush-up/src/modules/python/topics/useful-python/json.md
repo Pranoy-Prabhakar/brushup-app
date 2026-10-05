@@ -1,3 +1,13 @@
+---
+title: "JSON"
+slug: "json"
+category: "Useful Python"
+summary: "Exchange data with JSON text."
+keywords: "serialize parse loads dumps"
+order: 21
+related: ["dictionary", "file-handling", "type-conversion"]
+---
+
 ## What is it?
 JSON is a text format for sharing data. Python's `json` module turns JSON text into Python values and back.
 

@@ -1,3 +1,13 @@
+---
+title: "Dataclasses"
+slug: "dataclasses"
+category: "OOP"
+summary: "Make simple data-holding classes with less setup."
+keywords: "dataclass field asdict astuple replace records"
+order: 33
+related: ["classes", "type-hints", "json"]
+---
+
 ## What is it?
 A dataclass is a class for storing related values. The standard-library `dataclasses` module can create common setup methods, such as an initializer, from the fields you declare.
 

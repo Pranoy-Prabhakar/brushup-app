@@ -1,3 +1,13 @@
+---
+title: "Composition"
+slug: "composition"
+category: "OOP"
+summary: "Build behavior by assembling focused objects."
+keywords: "has-a object design"
+order: 17
+related: ["classes", "modules", "dataclasses"]
+---
+
 ## What is it?
 Composition builds an object from smaller helper objects. The main object asks each helper to do its job.
 

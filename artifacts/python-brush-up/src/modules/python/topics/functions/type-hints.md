@@ -1,3 +1,13 @@
+---
+title: "Type Hints"
+slug: "type-hints"
+category: "Functions"
+summary: "Add readable notes about the values code expects."
+keywords: "typing list dict tuple set Optional Union Literal Callable TypeAlias Protocol Any annotations"
+order: 34
+related: ["functions", "dataclasses", "testing"]
+---
+
 ## What is it?
 Type hints are notes about the kinds of values a function expects or returns. They help readers and editor tools; Python does not normally enforce them while the program runs.
 

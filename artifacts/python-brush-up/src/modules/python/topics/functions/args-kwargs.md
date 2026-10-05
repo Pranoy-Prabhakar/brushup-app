@@ -1,3 +1,13 @@
+---
+title: "*args and **kwargs"
+slug: "args-kwargs"
+category: "Functions"
+summary: "Collect extra positional and keyword arguments."
+keywords: "args kwargs variadic unpack"
+order: 11
+related: ["parameters", "functions", "decorators"]
+---
+
 ## What is it?
 `*args` gathers extra values given by position into a tuple. `**kwargs` gathers extra named values into a dictionary.
 

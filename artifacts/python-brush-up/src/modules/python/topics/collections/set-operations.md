@@ -1,3 +1,13 @@
+---
+title: "Set operations"
+slug: "set-operations"
+category: "Collections"
+summary: "Compare groups with union and intersection."
+keywords: "unique values union intersection difference"
+order: 26
+related: ["set", "dictionary", "collections-module"]
+---
+
 ## What is it?
 Set operations compare groups of unique values without writing manual nested loops.
 

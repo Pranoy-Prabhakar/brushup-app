@@ -1,3 +1,13 @@
+---
+title: "Collections Module"
+slug: "collections-module"
+category: "Collections"
+summary: "Use ready-made containers for common data tasks."
+keywords: "collections Counter defaultdict deque namedtuple standard library"
+order: 36
+related: ["list", "dictionary", "set-operations"]
+---
+
 ## What is it?
 The standard-library `collections` module provides useful container types beyond lists, tuples, sets, and dictionaries. These types solve common counting, grouping, and queue tasks.
 

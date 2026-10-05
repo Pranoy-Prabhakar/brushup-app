@@ -1,3 +1,13 @@
+---
+title: "Dictionary"
+slug: "dictionary"
+category: "Collections"
+summary: "Look up values by meaningful keys."
+keywords: "dict mapping key value lookup hash map"
+order: 8
+related: ["json", "collections-module", "set-operations"]
+---
+
 ## What is it?
 A dictionary stores values under keys, such as names or numbers. Use a key to find a value instead of its position.
 

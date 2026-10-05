@@ -1,3 +1,13 @@
+---
+title: "Type Conversion"
+slug: "type-conversion"
+category: "Basics"
+summary: "Turn a value into a type that fits the next task."
+keywords: "convert cast int float str bool list tuple set dict"
+order: 28
+related: ["input-output", "data-types", "json"]
+---
+
 ## What is it?
 Type conversion makes a value into another kind of value. For example, text from a form can become a number before a calculation.
 

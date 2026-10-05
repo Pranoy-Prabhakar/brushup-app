@@ -1,3 +1,13 @@
+---
+title: "Input and Output"
+slug: "input-output"
+category: "Basics"
+summary: "Read a response and show useful information."
+keywords: "input print output prompt display"
+order: 29
+related: ["strings", "type-conversion", "testing"]
+---
+
 ## What is it?
 Input brings information into a program; output shows information to a person or another tool. In a terminal program, `input()` reads a line of text and `print()` displays it.
 

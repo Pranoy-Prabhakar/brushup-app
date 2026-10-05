@@ -1,3 +1,13 @@
+---
+title: "Date and Time"
+slug: "date-time"
+category: "Useful Python"
+summary: "Create, read, format, and compare dates and times."
+keywords: "datetime date timedelta strptime strftime ISO standard library"
+order: 35
+related: ["strings", "file-handling", "type-conversion"]
+---
+
 ## What is it?
 The standard-library `datetime` module represents calendar dates, clock times, and spans of time. It helps avoid treating dates as plain text during calculations.
 

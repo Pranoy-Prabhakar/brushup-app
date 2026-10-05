@@ -1,3 +1,13 @@
+---
+title: "Decorators"
+slug: "decorators"
+category: "Pythonic Python"
+summary: "Wrap a function to add behavior around its work."
+keywords: "decorator @ functools wraps staticmethod classmethod property"
+order: 32
+related: ["functools", "functions", "classes"]
+---
+
 ## What is it?
 A decorator is a function that takes another function and returns a changed or wrapped version. The `@name` line applies it when the function is defined.
 

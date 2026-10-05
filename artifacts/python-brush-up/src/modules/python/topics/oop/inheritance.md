@@ -1,3 +1,13 @@
+---
+title: "Inheritance"
+slug: "inheritance"
+category: "OOP"
+summary: "Specialize behavior from a parent class."
+keywords: "parent subclass super"
+order: 16
+related: ["classes", "composition", "dataclasses"]
+---
+
 ## What is it?
 Inheritance makes a new class from an existing one. The new class can reuse or change its behavior.
 

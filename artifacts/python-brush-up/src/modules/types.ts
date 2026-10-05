@@ -6,6 +6,8 @@ export type Topic = {
   category: string;
   summary: string;
   keywords: string;
+  order: number;
+  related: string[];
 };
 
 export type RefresherItem = {

@@ -1,3 +1,13 @@
+---
+title: "Generators"
+slug: "generators"
+category: "Pythonic Python"
+summary: "Produce values one at a time with yield."
+keywords: "yield generator expression next lazy iteration"
+order: 31
+related: ["iterators", "itertools", "functions"]
+---
+
 ## What is it?
 A generator produces values one at a time instead of building them all at once. A function becomes a generator when it uses `yield`; `yield` sends out a value and pauses until the next request.
 

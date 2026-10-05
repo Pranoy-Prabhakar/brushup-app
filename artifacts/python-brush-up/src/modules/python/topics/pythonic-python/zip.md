@@ -1,3 +1,13 @@
+---
+title: "zip"
+slug: "zip"
+category: "Pythonic Python"
+summary: "Walk through sequences in parallel."
+keywords: "pair combine parallel"
+order: 14
+related: ["enumerate", "itertools", "dictionary"]
+---
+
 ## What is it?
 `zip()` pairs items from two or more sources, in order, one pair at a time.
 
