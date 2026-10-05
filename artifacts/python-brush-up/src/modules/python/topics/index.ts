@@ -1,4 +1,4 @@
-export type Topic = { title: string; slug: string; category: string; summary: string; keywords: string };
+import type { Topic } from '../../types';
 
 export const topics: Topic[] = [
   { title: 'Variables', slug: 'variables', category: 'Basics', summary: 'Names, values, and assignment in Python.', keywords: 'variable assignment name state' },
@@ -44,14 +44,3 @@ export const topics: Topic[] = [
 ];
 
 export const categories = ['Basics', 'Collections', 'Functions', 'Pythonic Python', 'OOP', 'Errors', 'Useful Python'];
-export const markdownFiles = import.meta.glob('./**/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>;
-export function getLesson(slug: string) {
-  const topic = topics.find((item) => item.slug === slug);
-  if (!topic) return undefined;
-  const categoryFolder: Record<string, string> = {
-    Basics: 'basics', Collections: 'collections', Functions: 'functions', 'Pythonic Python': 'pythonic-python',
-    OOP: 'oop', Errors: 'errors', 'Useful Python': 'useful-python',
-  };
-  const path = `./${categoryFolder[topic.category]}/${slug}.md`;
-  return { topic, markdown: markdownFiles[path] };
-}
